@@ -19,4 +19,9 @@ private Long id;
 
 @Column(nullable = false, unique = true)
 private String title;
+
+public String getName() {
+    return title; // return the title instead of calling itself
+}
+
 }
