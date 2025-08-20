@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.entity.BatchCycle;
 
 import com.sunbeam.logsheet.service.IBatchCycleService;
@@ -27,9 +28,12 @@ public class BatchCycleController {
     public BatchCycleController(IBatchCycleService service) {
         this.service = service;
     }
+
+    
     @PostMapping
-    public ResponseEntity<BatchCycle> createBatchCycle(@RequestBody BatchCycle batchCycle) {
-        return ResponseEntity.ok(service.addBatchCycle(batchCycle));
+    public ResponseEntity<ApiResponse> addBatchCycle(@RequestBody BatchCycle batchCycle) {
+        service.addBatchCycle(batchCycle);
+        return ResponseEntity.ok(new ApiResponse("Batch cycle added successfully", true));
     }
 
     
@@ -38,31 +42,29 @@ public class BatchCycleController {
         return ResponseEntity.ok(service.getAllBatchCycles());
     }
     
- 
-    @GetMapping("/{id}")
-    public ResponseEntity<BatchCycle> getBatchCycleById(@PathVariable Long id) {
-              BatchCycle cycle = service.getBatchCycleById(id);
-          return cycle != null ? ResponseEntity.ok(cycle) : ResponseEntity.notFound().build();
-    }
-
    
-    @PutMapping("/{id}")
-    public ResponseEntity<BatchCycle> updateBatchCycle(@PathVariable Long id, @RequestBody BatchCycle batchCycle) {
-         BatchCycle updated = service.updateBatchCycle(id, batchCycle);
-        return updated != null ?  ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBatchCycleById(@PathVariable Long id) {
+        BatchCycle bc = service.getBatchCycleById(id);
+        if (bc != null) {
+            return ResponseEntity.ok(bc);
+        } else {
+            return ResponseEntity.status(404).body(new ApiResponse("Batch cycle not found", false));
+        }
     }
-     
-//       @DeleteMapping("/{id}")
-//      public ResponseEntity<Void> deleteBatchCycle(@PathVariable Long id) {
-//        service.deleteBatchCycle(id);
-//        return ResponseEntity.noContent().build();
-//    }
 
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBatchCycle(@PathVariable Long id) {
-        service.deleteBatchCycle(id);
-        return ResponseEntity.ok("BatchCycle deleted successfully!");
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateBatchCycle(@PathVariable Long id, @RequestBody BatchCycle updated) {
+        service.updateBatchCycle(id, updated);
+        return ResponseEntity.ok(new ApiResponse("Batch cycle updated successfully", true));
     }
+    
+   
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse> deleteBatchCycle(@PathVariable Long id) {
+        service.deleteBatchCycle(id);
+        return ResponseEntity.ok(new ApiResponse("Batch cycle deleted successfully", true));
+    }
+
 
 }
