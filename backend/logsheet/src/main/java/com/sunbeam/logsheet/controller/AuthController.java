@@ -64,6 +64,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
+<<<<<<< HEAD
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         
             LoginResponse loginResponse = authService.login(request);
@@ -72,4 +73,21 @@ public class AuthController {
 
         
 }}
+=======
+    public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest request) {
+        try {
+            LoginResponse loginResponse = authService.login(request);
+
+            return ResponseEntity.ok(
+                new ApiResponse("Login successful", true, loginResponse)
+            );
+
+        } catch (RuntimeException ex) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ApiResponse("Login failed: " + ex.getMessage(), false));
+        }
+    }
+}
+>>>>>>> 1fa5b1c17e818556e1b9769b665cab1d4521cc2f
 
