@@ -32,5 +32,11 @@ public class CourseType {
 
 	@Column(nullable = false)
 	private String description;
+
+
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
