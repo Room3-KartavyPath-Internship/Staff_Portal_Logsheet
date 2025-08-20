@@ -1,47 +1,67 @@
 package com.sunbeam.logsheet.controller;
 
 import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.sunbeam.logsheet.service.PremisesService;
+import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.entity.Premises;
+import com.sunbeam.logsheet.service.PremisesService;
 
 @RestController
-@RequestMapping("/premises")
+@RequestMapping("/api/premises")
 public class PremisesController {
-
+    
     private final PremisesService service;
 
     public PremisesController(PremisesService service) {
         this.service = service;
     }
 
+    // ✅ Create Premises
     @PostMapping
-    public ResponseEntity<Premises> createPremises(@RequestBody Premises premises) {
-        return ResponseEntity.ok(service.addPremises(premises));
+    public ResponseEntity<ApiResponse> createPremises(@RequestBody Premises premises) {
+        service.addPremises(premises);
+        return ResponseEntity.ok(new ApiResponse("Premises created successfully!", true));
     }
 
+    // ✅ Get All Premises
     @GetMapping
     public ResponseEntity<List<Premises>> getAllPremises() {
         return ResponseEntity.ok(service.getAllPremises());
     }
 
+    // ✅ Get Premises by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Premises> getPremisesById(@PathVariable Long id) {
+    public ResponseEntity<?> getPremisesById(@PathVariable Long id) {
         Premises premises = service.getPremisesById(id);
-        return premises != null ? ResponseEntity.ok(premises) : ResponseEntity.notFound().build();
+        if (premises != null) {
+            return ResponseEntity.ok(premises);
+        } else {
+            return ResponseEntity.status(404).body(new ApiResponse("Premises not found!", false));
+        }
     }
 
+    // ✅ Update Premises
     @PutMapping("/{id}")
-    public ResponseEntity<Premises> updatePremises(@PathVariable Long id, @RequestBody Premises premises) {
-        Premises updated = service.updatePremises(id, premises);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    public ResponseEntity<ApiResponse> updatePremises(@PathVariable Long id, @RequestBody Premises updatedPremises) {
+        ApiResponse updated = service.updatePremises(id, updatedPremises);
+        if (updated != null) {
+            return ResponseEntity.ok(new ApiResponse("Premises updated successfully!", true));
+        } else {
+            return ResponseEntity.status(404).body(new ApiResponse("Premises not found!", false));
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePremises(@PathVariable Long id) {
-        service.deletePremises(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse> deletePremises(@PathVariable Long id) {
+        ApiResponse response = service.deletePremises(id);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(404).body(response);
+        }
     }
+
 }
