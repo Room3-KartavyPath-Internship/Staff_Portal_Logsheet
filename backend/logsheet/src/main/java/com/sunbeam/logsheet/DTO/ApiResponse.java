@@ -1,6 +1,3 @@
-
-
-
 package com.sunbeam.logsheet.DTO;
 
 
@@ -12,35 +9,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-
 public class ApiResponse {
     private boolean success;
     private String message;
     private LocalDateTime timeStamp;
-
-    private Object data;
-
-    // Convenience constructors
+    
     public ApiResponse(String message) {
-        this.message = message;
-        this.success = false; // default failure
-        this.timeStamp = LocalDateTime.now();
-        this.data = null;
-    }
-
-    public ApiResponse(String message, boolean success) {
-        this.message = message;
-        this.success = success;
-        this.timeStamp = LocalDateTime.now();
-        this.data = null;
-    }
-
-    public ApiResponse(String message, boolean success, Object data) {
-        this.message = message;
-        this.success = success;
-        this.timeStamp = LocalDateTime.now();
-        this.data = data;
-    }
+		this.message = message;
+		this.timeStamp = LocalDateTime.now();
+		
+	}
+    
+	public ApiResponse( String message,boolean success) {
+	
+		this.message = message;
+		this.success = success;
+		this.timeStamp = LocalDateTime.now();
+	}
+    
+    
 }
-
-
