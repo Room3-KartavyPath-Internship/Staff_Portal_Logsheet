@@ -29,7 +29,7 @@ public class Course {
     @JoinColumn(name = "premise_id", nullable=false)
     private Premises premise;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) 
     @JoinColumn(name = "course_type_id", nullable=false)
     private CourseType courseType;
 
@@ -42,3 +42,4 @@ public class Course {
     @Column(name="end_date", nullable=false)
     private LocalDate endDate;
 }
+
