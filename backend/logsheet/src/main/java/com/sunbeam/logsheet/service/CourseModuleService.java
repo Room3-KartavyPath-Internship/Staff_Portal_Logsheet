@@ -2,8 +2,10 @@
 
 package com.sunbeam.logsheet.service;
 
+import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.DTO.SectionDto;
 import com.sunbeam.logsheet.DTO.SubjectDto;
+import com.sunbeam.logsheet.DTO.TopicDto;
 
 import java.util.List;
 
@@ -20,4 +22,11 @@ public interface CourseModuleService {
     List<SectionDto> getAllSections();
     void updateSection(Long id, SectionDto dto);
     void deleteSection(Long id);
+    
+
+    // Topic
+    ApiResponse addTopic(TopicDto dto);
+    List<TopicDto> getAllTopics();
+    ApiResponse updateTopic(Long id, TopicDto dto);
+    ApiResponse deleteTopic(Long id);
 }
