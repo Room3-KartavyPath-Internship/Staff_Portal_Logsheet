@@ -1,16 +1,22 @@
 
     package com.sunbeam.logsheet.service;
+    import com.sunbeam.logsheet.entity.Module;
+
 
 import com.sunbeam.logsheet.DTO.ApiResponse;
+import com.sunbeam.logsheet.DTO.ModuleDto;
 import com.sunbeam.logsheet.DTO.SectionDto;
 import com.sunbeam.logsheet.DTO.SubjectDto;
 import com.sunbeam.logsheet.DTO.TopicDto;
 import com.sunbeam.logsheet.entity.Section;
 import com.sunbeam.logsheet.entity.Subject;
 import com.sunbeam.logsheet.entity.Topic;
+import com.sunbeam.logsheet.repository.ModuleRepository;
 import com.sunbeam.logsheet.repository.SectionRepository;
 import com.sunbeam.logsheet.repository.SubjectRepository;
 import com.sunbeam.logsheet.repository.TopicRepository;
+
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +35,9 @@ public class CourseModuleServiceImpl implements CourseModuleService {
     
     @Autowired
     private TopicRepository topicRepo;
+    
+    @Autowired
+    private ModuleRepository moduleRepo;
 
     // ---------- SUBJECT CRUD ----------
     @Override
@@ -139,7 +148,97 @@ public class CourseModuleServiceImpl implements CourseModuleService {
         topicRepo.deleteById(id);
         return new ApiResponse("Topic deleted", true);
 	}
-    
+
+	
+	//module
+	@Override
+	public ApiResponse addModule(ModuleDto dto) {
+	    Module module = new Module();
+	    module.setTitle(dto.getTitle());
+	    module.setDescription(dto.getDescription());
+	    module.setTheoryHours(dto.getTheoryHours());
+	    module.setPracticalHours(dto.getPracticalHours());
+	    module.setModuleRouterId(dto.getModuleRouterId());
+
+	    if (dto.getSubjectIds() != null) {
+	        module.setSubjects(dto.getSubjectIds().stream()
+	                .map(id -> subjectRepo.findById(id)
+	                        .orElseThrow(() -> new RuntimeException("Subject not found")))
+	                .collect(Collectors.toSet()));
+	    }
+
+	    moduleRepo.save(module);
+	    return new ApiResponse("Module added successfully", true);
+	}
+
+	@Transactional
+	@Override
+	public List<ModuleDto> getAllModules() {
+	    return moduleRepo.findAll().stream()
+	            .map(mod -> new ModuleDto(
+	                    mod.getId(),
+	                    mod.getTitle(),
+	                    mod.getDescription(),
+	                    mod.getTheoryHours(),
+	                    mod.getPracticalHours(),
+	                    mod.getModuleRouterId(),
+	                    mod.getSubjects().stream()
+	                            .map(Subject::getId) // Access inside transaction
+	                            .collect(Collectors.toSet())
+	            ))
+	            .collect(Collectors.toList());
+	}
+
+	@Override
+	public ApiResponse updateModule(Long id, ModuleDto dto) {
+	    Module module = moduleRepo.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Module not found"));
+
+	    module.setTitle(dto.getTitle());
+	    module.setDescription(dto.getDescription());
+	    module.setTheoryHours(dto.getTheoryHours());
+	    module.setPracticalHours(dto.getPracticalHours());
+	    module.setModuleRouterId(dto.getModuleRouterId());
+
+	    if (dto.getSubjectIds() != null) {
+	        module.setSubjects(dto.getSubjectIds().stream()
+	                .map(subjectId -> subjectRepo.findById(subjectId)
+	                        .orElseThrow(() -> new RuntimeException("Subject not found")))
+	                .collect(Collectors.toSet()));
+	    }
+
+	    moduleRepo.save(module);
+	    return new ApiResponse("Module updated successfully", true);
+	}
+
+//	@Override
+//	public ApiResponse deleteModule(Long id) {
+//	    if (!moduleRepo.existsById(id)) {
+//	        return new ApiResponse("Module not found", false);
+//	    }
+//	    moduleRepo.deleteById(id);
+//	    return new ApiResponse("Module deleted", true);
+//	}
+	
+	@Transactional
+	@Override
+	public ApiResponse deleteModule(Long id) {
+	    Module module = moduleRepo.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Module not found"));
+
+	    // Clear subjects to remove join-table entries
+	    module.getSubjects().clear();
+	    moduleRepo.save(module); // Update module after clearing relations
+
+	    // Now delete safely
+	    moduleRepo.delete(module);
+
+	    return new ApiResponse("Module deleted successfully", true);
+	}
+
+
+
+
     
 }
 
