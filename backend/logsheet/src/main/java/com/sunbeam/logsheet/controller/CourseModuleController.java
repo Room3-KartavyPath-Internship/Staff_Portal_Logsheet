@@ -6,6 +6,7 @@ package com.sunbeam.logsheet.controller;
 import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.DTO.SectionDto;
 import com.sunbeam.logsheet.DTO.SubjectDto;
+import com.sunbeam.logsheet.DTO.TopicDto;
 import com.sunbeam.logsheet.service.CourseModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -67,5 +68,31 @@ public class CourseModuleController {
         service.deleteSection(id);
         return ResponseEntity.ok(new ApiResponse("Section deleted successfully", true));
     }
+    
+    
+ // ---------------- TOPIC ----------------
+    @PostMapping("/topic")
+    public ResponseEntity<ApiResponse> addTopic(@RequestBody TopicDto dto) {
+        service.addTopic(dto);
+        return ResponseEntity.ok(new ApiResponse("Topic added successfully", true));
+    }
+
+    @GetMapping("/topics")
+    public ResponseEntity<List<TopicDto>> getTopics() {
+        return ResponseEntity.ok(service.getAllTopics());
+    }
+
+    @PutMapping("/topic/{id}")
+    public ResponseEntity<ApiResponse> updateTopic(@PathVariable Long id, @RequestBody TopicDto dto) {
+        service.updateTopic(id, dto);
+        return ResponseEntity.ok(new ApiResponse("Topic updated successfully", true));
+    }
+
+    @DeleteMapping("/topic/{id}")
+    public ResponseEntity<ApiResponse> deleteTopic(@PathVariable Long id) {
+        service.deleteTopic(id);
+        return ResponseEntity.ok(new ApiResponse("Topic deleted successfully", true));
+    }
+
 }
 
