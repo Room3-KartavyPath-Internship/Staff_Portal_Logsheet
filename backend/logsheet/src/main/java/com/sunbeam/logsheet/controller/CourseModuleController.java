@@ -4,7 +4,6 @@
 package com.sunbeam.logsheet.controller;
 
 import com.sunbeam.logsheet.DTO.ApiResponse;
-import com.sunbeam.logsheet.DTO.ModuleDto;
 import com.sunbeam.logsheet.DTO.SectionDto;
 import com.sunbeam.logsheet.DTO.SubjectDto;
 import com.sunbeam.logsheet.DTO.TopicDto;
@@ -94,31 +93,6 @@ public class CourseModuleController {
         service.deleteTopic(id);
         return ResponseEntity.ok(new ApiResponse("Topic deleted successfully", true));
     }
-    
- // ---------------- MODULE ----------------
-    @PostMapping("/module")
-    public ResponseEntity<ApiResponse> addModule(@RequestBody ModuleDto dto) {
-        service.addModule(dto);
-        return ResponseEntity.ok(new ApiResponse("Module added successfully", true));
-    }
-
-    @GetMapping("/modules")
-    public ResponseEntity<List<ModuleDto>> getModules() {
-        return ResponseEntity.ok(service.getAllModules());
-    }
-
-    @PutMapping("/module/{id}")
-    public ResponseEntity<ApiResponse> updateModule(@PathVariable Long id, @RequestBody ModuleDto dto) {
-        service.updateModule(id, dto);
-        return ResponseEntity.ok(new ApiResponse("Module updated successfully", true));
-    }
-
-    @DeleteMapping("/module/{id}")
-    public ResponseEntity<ApiResponse> deleteModule(@PathVariable Long id) {
-        service.deleteModule(id);
-        return ResponseEntity.ok(new ApiResponse("Module deleted successfully", true));
-    }
-
 
 }
 

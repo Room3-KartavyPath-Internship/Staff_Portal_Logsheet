@@ -54,10 +54,8 @@ public class CourseTypeServiceImpl implements CourseTypeService {
         return new ApiResponse("Successfully deleted",true);
     }
 
-	@Override
-	public List<CourseType> getAllCourseTypes() {
-		 return courseTypeRepository.findAll();
-		
-	}
-
+    @Override
+    public List<CourseType> getAllCourseTypes() {
+        return courseTypeRepository.findAll();
+    }
 }
