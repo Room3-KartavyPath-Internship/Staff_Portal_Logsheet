@@ -3,6 +3,9 @@ package com.sunbeam.logsheet.service;
 import com.sunbeam.logsheet.DTO.CourseDTO;
 import com.sunbeam.logsheet.entity.*;
 import com.sunbeam.logsheet.repository.*;
+
+import jakarta.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class CourseServiceImpl implements CourseService {
 

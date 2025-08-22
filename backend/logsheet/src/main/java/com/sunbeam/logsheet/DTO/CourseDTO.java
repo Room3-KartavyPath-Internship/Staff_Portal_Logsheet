@@ -13,10 +13,9 @@ public class CourseDTO {
     private Long id;
     private String name;
 
-    private Long batchCycleId;   // reference to BatchCycle
-    private Long premiseId;      // reference to Premises
-    private Long courseTypeId;   // reference to CourseType
-
+    private Long batchCycleId;   
+    private Long premiseId;      
+    private Long courseTypeId;   
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;

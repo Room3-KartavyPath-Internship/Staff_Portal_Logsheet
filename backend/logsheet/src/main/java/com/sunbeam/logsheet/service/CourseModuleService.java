@@ -3,7 +3,6 @@
 package com.sunbeam.logsheet.service;
 
 import com.sunbeam.logsheet.DTO.ApiResponse;
-import com.sunbeam.logsheet.DTO.ModuleDto;
 import com.sunbeam.logsheet.DTO.SectionDto;
 import com.sunbeam.logsheet.DTO.SubjectDto;
 import com.sunbeam.logsheet.DTO.TopicDto;
@@ -30,12 +29,4 @@ public interface CourseModuleService {
     List<TopicDto> getAllTopics();
     ApiResponse updateTopic(Long id, TopicDto dto);
     ApiResponse deleteTopic(Long id);
-
-    
-
-    // Module
-    ApiResponse addModule(ModuleDto dto);
-    List<ModuleDto> getAllModules();
-    ApiResponse updateModule(Long id, ModuleDto dto);
-    ApiResponse deleteModule(Long id);
 }

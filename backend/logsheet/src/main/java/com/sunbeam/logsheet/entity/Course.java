@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class Course {
 
@@ -41,5 +42,20 @@ public class Course {
 
     @Column(name="end_date", nullable=false)
     private LocalDate endDate;
+    
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupMaster> groups = new ArrayList<>();
+
+    
+    public void addGroup(GroupMaster group) {
+        groups.add(group);
+        group.setCourse(this);
+    }
+
+   
+    public void removeGroup(GroupMaster group) {
+        groups.remove(group);
+        group.setCourse(null);
+    }
 }
 
