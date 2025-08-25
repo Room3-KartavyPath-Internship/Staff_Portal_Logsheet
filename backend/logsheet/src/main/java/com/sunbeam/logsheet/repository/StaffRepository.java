@@ -8,4 +8,6 @@ import com.sunbeam.logsheet.entity.Staff;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Long> {
     Optional<Staff> findByEmail(String email);
+    boolean existsByEmail(String email);
+
 }
