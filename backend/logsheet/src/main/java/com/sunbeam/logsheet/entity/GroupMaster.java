@@ -13,6 +13,7 @@ import lombok.Data;
 @Entity
 @Table(name = "group_master")
 @Data
+
 public class GroupMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
