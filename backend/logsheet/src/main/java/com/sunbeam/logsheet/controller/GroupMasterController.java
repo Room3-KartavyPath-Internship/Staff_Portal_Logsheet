@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/groups")
 public class GroupMasterController {
 
-	
-    @Autowired 
+    @Autowired
     private GroupMasterService groupMasterService;
 
     @PostMapping

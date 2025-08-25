@@ -33,12 +33,10 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "premise_id", nullable=true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-
     private Premises premise;
 
     @ManyToOne(fetch = FetchType.EAGER) 
     @JoinColumn(name = "course_type_id", nullable=true)
-
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private CourseType courseType;
 
