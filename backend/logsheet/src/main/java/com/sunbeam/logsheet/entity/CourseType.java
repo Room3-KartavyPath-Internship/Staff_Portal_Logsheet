@@ -34,10 +34,6 @@ public class CourseType {
 	private String description;
 
 
-	public Long getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
 
