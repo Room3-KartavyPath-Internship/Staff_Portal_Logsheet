@@ -21,11 +21,10 @@ public class CourseModuleController {
     @Autowired
     private CourseModuleService service;
 
-    // ---------------- SUBJECT ----------------
     @PostMapping("/subject")
-    public ResponseEntity<ApiResponse> addSubject(@RequestBody SubjectDto dto) {
+    public ResponseEntity<ApiResponse<?>> addSubject(@RequestBody SubjectDto dto) {
         service.addSubject(dto);
-        return ResponseEntity.ok(new ApiResponse("Subject added successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Subject added successfully", true));
     }
 
     @GetMapping("/subjects")
@@ -34,22 +33,22 @@ public class CourseModuleController {
     }
 
     @PutMapping("/subject/{id}")
-    public ResponseEntity<ApiResponse> updateSubject(@PathVariable Long id, @RequestBody SubjectDto dto) {
+    public ResponseEntity<ApiResponse<?>> updateSubject(@PathVariable Long id, @RequestBody SubjectDto dto) {
         service.updateSubject(id, dto);
-        return ResponseEntity.ok(new ApiResponse("Subject updated successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Subject updated successfully", true));
     }
 
     @DeleteMapping("/subject/{id}")
-    public ResponseEntity<ApiResponse> deleteSubject(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<?>> deleteSubject(@PathVariable Long id) {
         service.deleteSubject(id);
-        return ResponseEntity.ok(new ApiResponse("Subject deleted successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Subject deleted successfully", true));
     }
 
-    // ---------------- SECTION ----------------
+
     @PostMapping("/section")
-    public ResponseEntity<ApiResponse> addSection(@RequestBody SectionDto dto) {
+    public ResponseEntity<ApiResponse<?>> addSection(@RequestBody SectionDto dto) {
         service.addSection(dto);
-        return ResponseEntity.ok(new ApiResponse("Section added successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Section added successfully", true));
     }
 
     @GetMapping("/sections")
@@ -58,23 +57,22 @@ public class CourseModuleController {
     }
 
     @PutMapping("/section/{id}")
-    public ResponseEntity<ApiResponse> updateSection(@PathVariable Long id, @RequestBody SectionDto dto) {
+    public ResponseEntity<ApiResponse<?>> updateSection(@PathVariable Long id, @RequestBody SectionDto dto) {
         service.updateSection(id, dto);
-        return ResponseEntity.ok(new ApiResponse("Section updated successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Section updated successfully", true));
     }
 
     @DeleteMapping("/section/{id}")
-    public ResponseEntity<ApiResponse> deleteSection(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<?>> deleteSection(@PathVariable Long id) {
         service.deleteSection(id);
-        return ResponseEntity.ok(new ApiResponse("Section deleted successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Section deleted successfully", true));
     }
     
     
- // ---------------- TOPIC ----------------
     @PostMapping("/topic")
-    public ResponseEntity<ApiResponse> addTopic(@RequestBody TopicDto dto) {
+    public ResponseEntity<ApiResponse<?>> addTopic(@RequestBody TopicDto dto) {
         service.addTopic(dto);
-        return ResponseEntity.ok(new ApiResponse("Topic added successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Topic added successfully", true));
     }
 
     @GetMapping("/topics")
@@ -83,15 +81,15 @@ public class CourseModuleController {
     }
 
     @PutMapping("/topic/{id}")
-    public ResponseEntity<ApiResponse> updateTopic(@PathVariable Long id, @RequestBody TopicDto dto) {
+    public ResponseEntity<ApiResponse<?>> updateTopic(@PathVariable Long id, @RequestBody TopicDto dto) {
         service.updateTopic(id, dto);
-        return ResponseEntity.ok(new ApiResponse("Topic updated successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Topic updated successfully", true));
     }
 
     @DeleteMapping("/topic/{id}")
-    public ResponseEntity<ApiResponse> deleteTopic(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<?>> deleteTopic(@PathVariable Long id) {
         service.deleteTopic(id);
-        return ResponseEntity.ok(new ApiResponse("Topic deleted successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Topic deleted successfully", true));
     }
 
 }

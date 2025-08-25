@@ -7,8 +7,8 @@ import com.sunbeam.logsheet.DTO.GroupResponseDTO;
 import java.util.List;
 
 public interface GroupMasterService {
-    ApiResponse addGroup(GroupRequestDTO dto);
-    ApiResponse updateGroup(Long id, GroupRequestDTO dto);
-    ApiResponse deleteGroup(Long id);
+    ApiResponse<?> addGroup(GroupRequestDTO dto);
+    ApiResponse<?> updateGroup(Long id, GroupRequestDTO dto);
+    ApiResponse<?> deleteGroup(Long id);
     List<GroupResponseDTO> getAllGroups();
 }

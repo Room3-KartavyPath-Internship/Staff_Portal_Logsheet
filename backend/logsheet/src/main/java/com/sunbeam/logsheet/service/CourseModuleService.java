@@ -11,22 +11,22 @@ import java.util.List;
 
 public interface CourseModuleService {
 
-    // Subject
+
     void addSubject(SubjectDto dto);
     List<SubjectDto> getAllSubjects();
     void updateSubject(Long id, SubjectDto dto);
     void deleteSubject(Long id);
 
-    // Section
+    
     void addSection(SectionDto dto);
     List<SectionDto> getAllSections();
     void updateSection(Long id, SectionDto dto);
     void deleteSection(Long id);
     
 
-    // Topic
-    ApiResponse addTopic(TopicDto dto);
+ 
+    ApiResponse<?> addTopic(TopicDto dto);
     List<TopicDto> getAllTopics();
-    ApiResponse updateTopic(Long id, TopicDto dto);
-    ApiResponse deleteTopic(Long id);
+    ApiResponse<?> updateTopic(Long id, TopicDto dto);
+    ApiResponse<?> deleteTopic(Long id);
 }

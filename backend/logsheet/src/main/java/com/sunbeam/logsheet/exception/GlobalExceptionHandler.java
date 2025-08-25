@@ -17,22 +17,22 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public ApiResponse handleResourceNotFoundException(ResourceNotFoundException e) {
-		//System.out.println("in res not found " + e);
-		return new ApiResponse(e.getMessage());
+	public ApiResponse<?> handleResourceNotFoundException(ResourceNotFoundException e) {
+
+		return new ApiResponse<>(e.getMessage());
 	}
 
 	@ExceptionHandler(IOException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public ApiResponse handleIOException(IOException e) {
-		return new ApiResponse(e.getMessage());
+	public ApiResponse<?> handleIOException(IOException e) {
+		return new ApiResponse<>(e.getMessage());
 	}
 
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	public ApiResponse handleAnyException(RuntimeException e) {
+	public ApiResponse<?> handleAnyException(RuntimeException e) {
 
-		return new ApiResponse(e.getMessage());
+		return new ApiResponse<>(e.getMessage());
 	}
 
 	
