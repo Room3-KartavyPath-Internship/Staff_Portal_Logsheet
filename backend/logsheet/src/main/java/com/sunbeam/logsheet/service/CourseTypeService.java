@@ -8,7 +8,7 @@ import java.util.List;
 public interface CourseTypeService {
     CourseType addCourseType(CourseTypeDTO dto);
     CourseType getCourseType(Long id);
-    ApiResponse updateCourseType(Long id, CourseTypeDTO courseTypeDTO);
-    ApiResponse deleteCourseType(Long id);
+    ApiResponse<?> updateCourseType(Long id, CourseTypeDTO courseTypeDTO);
+    ApiResponse<?> deleteCourseType(Long id);
     List<CourseType> getAllCourseTypes();
 }

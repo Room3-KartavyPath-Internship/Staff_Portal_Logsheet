@@ -35,23 +35,23 @@ public class CourseTypeServiceImpl implements CourseTypeService {
     }
     
     @Override
-    public ApiResponse updateCourseType(Long id, CourseTypeDTO courseTypeDTO) {
+    public ApiResponse<?> updateCourseType(Long id, CourseTypeDTO courseTypeDTO) {
         CourseType existing = courseTypeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course type not found with id: " + id));
 
         existing.setTitle(courseTypeDTO.getTitle());
         existing.setDescription(courseTypeDTO.getDescription());
         courseTypeRepository.save(existing);
-        return new ApiResponse("Updated Successfully",true);
+        return new ApiResponse<>("Updated Successfully",true);
     }
 
 
     @Override
-    public ApiResponse deleteCourseType(Long id) {
+    public ApiResponse<?> deleteCourseType(Long id) {
         CourseType courseType = courseTypeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course type with ID " + id + " not found"));
         courseTypeRepository.delete(courseType);
-        return new ApiResponse("Successfully deleted",true);
+        return new ApiResponse<>("Successfully deleted",true);
     }
 
     @Override

@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/course-types")
@@ -19,10 +18,10 @@ public class CourseTypeController {
     private CourseTypeService courseTypeService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> addCourseType(@RequestBody CourseTypeDTO dto) {
+    public ResponseEntity<ApiResponse<?>> addCourseType(@RequestBody CourseTypeDTO dto) {
         courseTypeService.addCourseType(dto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse("Course type created successfully ", true));
+                .body(new ApiResponse<>("Course type created successfully ", true));
     }
 
     @GetMapping("/{id}")
@@ -43,7 +42,7 @@ public class CourseTypeController {
 
   
     @GetMapping
-    public ResponseEntity<List<CourseType>> getAllCourseTypes() {
-        return ResponseEntity.ok(courseTypeService.getAllCourseTypes());
+    public ResponseEntity<ApiResponse<?>> getAllCourseTypes() {
+        return ResponseEntity.ok(new ApiResponse<>("All Course Type",true,courseTypeService.getAllCourseTypes()));
     }
 }

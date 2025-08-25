@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "courses")
 @Getter
@@ -23,15 +26,16 @@ public class Course {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "batch_cycle_id", nullable=false)
+    @JoinColumn(name = "batch_cycle_id", nullable=true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private BatchCycle batchCycle;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "premise_id", nullable=false)
+    @JoinColumn(name = "premise_id", nullable=true)
     private Premises premise;
 
     @ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name = "course_type_id", nullable=false)
+    @JoinColumn(name = "course_type_id", nullable=true)
     private CourseType courseType;
 
     @Column(nullable=false)

@@ -6,7 +6,6 @@ import com.sunbeam.logsheet.repository.*;
 
 import jakarta.transaction.Transactional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +28,6 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseTypeRepository courseTypeRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public CourseDTO createCourse(CourseDTO courseDTO) {
@@ -64,7 +61,7 @@ public class CourseServiceImpl implements CourseService {
         existing.setStartDate(courseDTO.getStartDate());
         existing.setEndDate(courseDTO.getEndDate());
 
-        // update relationships
+     
         existing.setBatchCycle(batchCycleRepository.findById(courseDTO.getBatchCycleId())
                 .orElseThrow(() -> new RuntimeException("BatchCycle not found with id " + courseDTO.getBatchCycleId())));
         existing.setPremise(premisesRepository.findById(courseDTO.getPremiseId())
@@ -83,7 +80,7 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.delete(existing);
     }
 
-    // 🔹 Utility methods for mapping
+
     private Course mapDtoToEntity(CourseDTO dto) {
         Course course = new Course();
         course.setId(dto.getId());
@@ -91,14 +88,21 @@ public class CourseServiceImpl implements CourseService {
         course.setDescription(dto.getDescription());
         course.setStartDate(dto.getStartDate());
         course.setEndDate(dto.getEndDate());
+        if (dto.getBatchCycleId() != null) {
+            course.setBatchCycle(batchCycleRepository.findById(dto.getBatchCycleId())
+                    .orElseThrow(() -> new RuntimeException("BatchCycle not found with id " + dto.getBatchCycleId())));
+        }
 
-        course.setBatchCycle(batchCycleRepository.findById(dto.getBatchCycleId())
-                .orElseThrow(() -> new RuntimeException("BatchCycle not found with id " + dto.getBatchCycleId())));
-        course.setPremise(premisesRepository.findById(dto.getPremiseId())
-                .orElseThrow(() -> new RuntimeException("Premises not found with id " + dto.getPremiseId())));
-        course.setCourseType(courseTypeRepository.findById(dto.getCourseTypeId())
-                .orElseThrow(() -> new RuntimeException("CourseType not found with id " + dto.getCourseTypeId())));
+        if (dto.getCourseTypeId() != null) {
+            course.setCourseType(courseTypeRepository.findById(dto.getCourseTypeId())
+                    .orElseThrow(() -> new RuntimeException("CourseType not found with id " + dto.getCourseTypeId())));
+        }
 
+        if (dto.getPremiseId() != null) {
+            course.setPremise(premisesRepository.findById(dto.getPremiseId())
+                    .orElseThrow(() -> new RuntimeException("Premise not found with id " + dto.getPremiseId())));
+        }
+       
         return course;
     }
 
@@ -109,9 +113,9 @@ public class CourseServiceImpl implements CourseService {
         dto.setDescription(course.getDescription());
         dto.setStartDate(course.getStartDate());
         dto.setEndDate(course.getEndDate());
-        dto.setBatchCycleId(course.getBatchCycle().getId());
-        dto.setPremiseId(course.getPremise().getId());
-        dto.setCourseTypeId(course.getCourseType().getId());
+        dto.setBatchCycleId(course.getBatchCycle() != null ? course.getBatchCycle().getId() : null);
+        dto.setCourseTypeId(course.getCourseType() != null ? course.getCourseType().getCourseTypeId() : null);
+        dto.setPremiseId(course.getPremise() != null ? course.getPremise().getId() : null);
         return dto;
     }
 }

@@ -1,7 +1,6 @@
 package com.sunbeam.logsheet.DTO;
 
 
-import java.time.LocalDateTime;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,14 +8,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class ApiResponse {
+public class ApiResponse<T> {
     private boolean success;
     private String message;
-    private LocalDateTime timeStamp;
+    private T data;
+   
     
     public ApiResponse(String message) {
 		this.message = message;
-		this.timeStamp = LocalDateTime.now();
+		
 		
 	}
     
@@ -24,8 +24,17 @@ public class ApiResponse {
 	
 		this.message = message;
 		this.success = success;
-		this.timeStamp = LocalDateTime.now();
+		
 	}
+
+	public ApiResponse( String message,boolean success, T data) {
+		
+		this.message = message;
+		this.success = success;
+		this.data = data;
+	}
+	
+	
     
     
 }
