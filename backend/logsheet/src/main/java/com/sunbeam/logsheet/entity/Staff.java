@@ -32,6 +32,9 @@ private String email;
 @Column(nullable = false)
 private String password;
 
+@Column(name="mobile", length = 15, nullable = false)
+private String mobile;  
+
 
 @ManyToOne
 @JoinColumn(name = "role_id", nullable = false)
