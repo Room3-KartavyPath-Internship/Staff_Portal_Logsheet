@@ -63,7 +63,7 @@ public class PremisesServiceImpl implements PremisesService {
         	
             repository.delete(premise);
            
-            return new ApiResponse<>("deleted") ;
+            return new ApiResponse<>("deleted",true) ;
             
         }
         return new ApiResponse<>("Premises not found!", false);
