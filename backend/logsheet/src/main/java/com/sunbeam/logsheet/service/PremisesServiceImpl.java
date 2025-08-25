@@ -2,6 +2,7 @@ package com.sunbeam.logsheet.service;
 
 import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.entity.Premises;
+import com.sunbeam.logsheet.repository.CourseRepository;
 import com.sunbeam.logsheet.repository.PremisesRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class PremisesServiceImpl implements PremisesService {
-
-	 @Autowired
+	
+	@Autowired
 	    private PremisesRepository repository;
 
-    public PremisesServiceImpl(PremisesRepository repository) {
+    public PremisesServiceImpl(PremisesRepository repository, CourseRepository courseRepository) {
         this.repository = repository;
     }
 
@@ -40,7 +42,7 @@ public class PremisesServiceImpl implements PremisesService {
     }
 
     @Override
-    public ApiResponse updatePremises(Long id, Premises updatedPremises) {
+    public ApiResponse<?> updatePremises(Long id, Premises updatedPremises) {
         Premises existing = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Premises not found with id: " + id));
 
@@ -49,16 +51,22 @@ public class PremisesServiceImpl implements PremisesService {
         existing.setDescription(updatedPremises.getDescription());
 
         repository.save(existing);
-        return new ApiResponse("Premises updated successfully", true);
+        return new ApiResponse<>("Premises updated successfully", true);
     }
 
     @Override
-    public ApiResponse deletePremises(Long id) {
+    public ApiResponse<?> deletePremises(Long id) {
         if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return new ApiResponse("Premises deleted successfully!", true);
+        	
+        	 Premises premise = repository.findById(id)
+                     .orElseThrow(() -> new RuntimeException("Premise not found with id " + id));
+        	
+            repository.delete(premise);
+           
+            return new ApiResponse<>("deleted") ;
+            
         }
-        return new ApiResponse("Premises not found!", false);
+        return new ApiResponse<>("Premises not found!", false);
     }
 
 }

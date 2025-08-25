@@ -9,7 +9,7 @@ public interface IBatchCycleService {
 	 BatchCycle addBatchCycle(BatchCycle batchCycle);
 	    List<BatchCycle> getAllBatchCycles();
 	    BatchCycle getBatchCycleById(Long id);
-	    ApiResponse updateBatchCycle(Long id, BatchCycle updatedCycle);
+	    ApiResponse<?> updateBatchCycle(Long id, BatchCycle updatedCycle);
 
-	    ApiResponse deleteBatchCycle(Long id);
+	    ApiResponse<?> deleteBatchCycle(Long id);
 }

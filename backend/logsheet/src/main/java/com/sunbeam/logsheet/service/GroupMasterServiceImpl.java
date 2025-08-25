@@ -31,7 +31,7 @@ public class GroupMasterServiceImpl implements GroupMasterService {
     private ModelMapper modelMapper;
 
     @Override
-    public ApiResponse addGroup(GroupRequestDTO dto) {
+    public ApiResponse<?> addGroup(GroupRequestDTO dto) {
         Course course = courseRepository.findById(dto.getCourseId())
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
@@ -40,11 +40,11 @@ public class GroupMasterServiceImpl implements GroupMasterService {
 
         groupMasterRepository.save(group);
 
-        return new ApiResponse("Group added successfully", true);
+        return new ApiResponse<>("Group added successfully", true);
     }
 
     @Override
-    public ApiResponse updateGroup(Long id, GroupRequestDTO dto) {
+    public ApiResponse<?> updateGroup(Long id, GroupRequestDTO dto) {
         GroupMaster group = groupMasterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
@@ -52,11 +52,11 @@ public class GroupMasterServiceImpl implements GroupMasterService {
         group.setDescription(dto.getDescription());
 
         groupMasterRepository.save(group);
-        return new ApiResponse("Group updated successfully", true);
+        return new ApiResponse<>("Group updated successfully", true);
     }
 
     @Override
-    public ApiResponse deleteGroup(Long id) {
+    public ApiResponse<?> deleteGroup(Long id) {
         GroupMaster group = groupMasterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
@@ -65,7 +65,7 @@ public class GroupMasterServiceImpl implements GroupMasterService {
         }
 
         groupMasterRepository.delete(group);
-        return new ApiResponse("Group deleted successfully", true);
+        return new ApiResponse<>("Group deleted successfully", true);
     }
 
     @Override

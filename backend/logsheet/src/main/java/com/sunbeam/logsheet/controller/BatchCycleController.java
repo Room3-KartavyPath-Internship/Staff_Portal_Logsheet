@@ -31,9 +31,9 @@ public class BatchCycleController {
 
     
     @PostMapping
-    public ResponseEntity<ApiResponse> addBatchCycle(@RequestBody BatchCycle batchCycle) {
+    public ResponseEntity<ApiResponse<?>> addBatchCycle(@RequestBody BatchCycle batchCycle) {
         service.addBatchCycle(batchCycle);
-        return ResponseEntity.ok(new ApiResponse("Batch cycle added successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Batch cycle added successfully", true));
     }
 
     
@@ -49,21 +49,21 @@ public class BatchCycleController {
         if (bc != null) {
             return ResponseEntity.ok(bc);
         } else {
-            return ResponseEntity.status(404).body(new ApiResponse("Batch cycle not found", false));
+            return ResponseEntity.status(404).body(new ApiResponse<>("Batch cycle not found", false));
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateBatchCycle(@PathVariable Long id, @RequestBody BatchCycle updated) {
+    public ResponseEntity<ApiResponse<?>> updateBatchCycle(@PathVariable Long id, @RequestBody BatchCycle updated) {
         service.updateBatchCycle(id, updated);
-        return ResponseEntity.ok(new ApiResponse("Batch cycle updated successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Batch cycle updated successfully", true));
     }
     
    
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteBatchCycle(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<?>> deleteBatchCycle(@PathVariable Long id) {
         service.deleteBatchCycle(id);
-        return ResponseEntity.ok(new ApiResponse("Batch cycle deleted successfully", true));
+        return ResponseEntity.ok(new ApiResponse<>("Batch cycle deleted successfully", true));
     }
 
 

@@ -9,7 +9,7 @@ public interface PremisesService {
     Premises addPremises(Premises premises);
     List<Premises> getAllPremises();
     Premises getPremisesById(Long id);
-    ApiResponse updatePremises(Long id, Premises updatedPremises);
-    ApiResponse deletePremises(Long id);
+    ApiResponse<?> updatePremises(Long id, Premises updatedPremises);
+    ApiResponse<?> deletePremises(Long id);
 
 }

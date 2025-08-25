@@ -30,7 +30,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
     @Autowired
     private TopicRepository topicRepo;
 
-    // ---------- SUBJECT CRUD ----------
+
     @Override
     public void addSubject(SubjectDto dto) {
         Subject subject = new Subject();
@@ -61,7 +61,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
         subjectRepo.deleteById(id);
     }
 
-    // ---------- SECTION CRUD ----------
+    
     @Override
     public void addSection(SectionDto dto) {
         Subject subject = subjectRepo.findById(dto.getSubjectId())
@@ -102,14 +102,14 @@ public class CourseModuleServiceImpl implements CourseModuleService {
     //Topic
     
 	@Override
-	public ApiResponse addTopic(TopicDto dto) {
+	public ApiResponse<?> addTopic(TopicDto dto) {
 		Section section = sectionRepo.findById(dto.getSectionId())
                 .orElseThrow(() -> new RuntimeException("Section not found"));
         Topic topic = new Topic();
         topic.setName(dto.getName());
         topic.setSection(section);
         topicRepo.save(topic);
-        return new ApiResponse("Topic added successfully", true);
+        return new ApiResponse<>("Topic added successfully", true);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	}
 
 	@Override
-	public ApiResponse updateTopic(Long id, TopicDto dto) {
+	public ApiResponse<?> updateTopic(Long id, TopicDto dto) {
 		Topic topic = topicRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Topic not found"));
         Section section = sectionRepo.findById(dto.getSectionId())
@@ -128,16 +128,16 @@ public class CourseModuleServiceImpl implements CourseModuleService {
         topic.setName(dto.getName());
         topic.setSection(section);
         topicRepo.save(topic);
-        return new ApiResponse("Topic updated", true);
+        return new ApiResponse<>("Topic updated", true);
 	}
 
 	@Override
-	public ApiResponse deleteTopic(Long id) {
+	public ApiResponse<?> deleteTopic(Long id) {
 		if (!topicRepo.existsById(id)) {
-            return new ApiResponse("Topic not found", false);
+            return new ApiResponse<>("Topic not found", false);
         }
         topicRepo.deleteById(id);
-        return new ApiResponse("Topic deleted", true);
+        return new ApiResponse<>("Topic deleted", true);
 	}
     
     
