@@ -35,7 +35,7 @@ public class Course {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Premises premise;
 
-    @ManyToOne(fetch = FetchType.EAGER) 
+    @ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "course_type_id", nullable=true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private CourseType courseType;
