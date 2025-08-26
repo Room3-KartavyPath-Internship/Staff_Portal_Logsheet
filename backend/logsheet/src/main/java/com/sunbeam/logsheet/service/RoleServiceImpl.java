@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // ---------------- CREATE ROLE ----------------
+    
     @Override
     public ApiResponse<?> createRole(RoleCreateDTO dto) {
         Role role = new Role();
@@ -50,7 +50,6 @@ public class RoleServiceImpl implements RoleService {
         List<RoleMenuPermission> permissions = dto.getMenuPermissions().stream().map(p -> {
             RoleMenuPermission perm = new RoleMenuPermission();
 
-            // Fetch MenuItem entity
             var menuItem = menuItemRepository.findById(p.getMenuItemId())
                     .orElseThrow(() -> new EntityNotFoundException("Menu item not found"));
 
@@ -65,8 +64,17 @@ public class RoleServiceImpl implements RoleService {
         savedRole.setMenuPermissions(permissions);
         roleRepository.save(savedRole);
 
-        return new ApiResponse<>("Role created successfully", true,
-                modelMapper.map(savedRole, RoleResponseDTO.class));
+        // Manual mapping for response to include roleId & menuItemId
+        RoleResponseDTO responseDTO = modelMapper.map(savedRole, RoleResponseDTO.class);
+        responseDTO.setMenuPermissions(savedRole.getMenuPermissions().stream().map(p -> {
+            RoleMenuPermissionDTO permDTO = new RoleMenuPermissionDTO();
+            permDTO.setRoleId(p.getRole().getId());
+            permDTO.setMenuItemId(p.getMenuItem().getId());
+            permDTO.setAllowed(p.isAllowed());
+            return permDTO;
+        }).collect(Collectors.toList()));
+
+        return new ApiResponse<>("Role created successfully", true, responseDTO);
     }
 
     @Override
