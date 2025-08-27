@@ -1,9 +1,11 @@
 package com.sunbeam.logsheet.controller;
 
 import com.sunbeam.logsheet.DTO.LogsheetDTO;
+import com.sunbeam.logsheet.DTO.LogsheetUpdateDTO;
 import com.sunbeam.logsheet.DTO.VerifyLogRequest;
 import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.DTO.ApproveLogRequest;
+import com.sunbeam.logsheet.DTO.LogsheetCreateDTO;
 import com.sunbeam.logsheet.service.LogsheetService;
 
 import org.springframework.http.HttpStatus;
@@ -24,14 +26,14 @@ public class LogsheetController {
 
  
     @PostMapping
-    public ResponseEntity<ApiResponse<LogsheetDTO>> addLogsheet(@RequestBody LogsheetDTO dto) {
+    public ResponseEntity<ApiResponse<LogsheetDTO>> addLogsheet(@RequestBody LogsheetCreateDTO dto) {
         LogsheetDTO created = logsheetService.addLogsheet(dto).getData();
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Logsheet Added Successfully", true, created));
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<LogsheetDTO>> updateLogsheet(@PathVariable Long id, @RequestBody LogsheetDTO dto) {
+    public ResponseEntity<ApiResponse<LogsheetDTO>> updateLogsheet(@PathVariable Long id, @RequestBody LogsheetUpdateDTO dto) {
         LogsheetDTO updated = logsheetService.updateLogsheet(id, dto).getData();
         return ResponseEntity.ok(new ApiResponse<>("Logsheet Updated Successfully", true, updated));
     }

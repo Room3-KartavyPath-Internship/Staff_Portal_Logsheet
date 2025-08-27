@@ -10,6 +10,5 @@ import java.time.LocalDateTime;
 public class VerifyLogRequest {
     private Long verifierId; 
     private String verificationStatus; 
-    private String comment; 
     private LocalDateTime verifiedAt; 
 }
