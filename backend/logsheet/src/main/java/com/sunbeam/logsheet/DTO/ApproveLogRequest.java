@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 public class ApproveLogRequest {
     private Long approverId; 
-    private String approvalStatus; 
-    private String comment; 
+    private String approvalStatus;  
     private LocalDateTime approvedAt; 
 }

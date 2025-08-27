@@ -11,6 +11,7 @@ public class LogsheetTypeDTO {
     private String title;
     private String description;
     private Double theoryPercent;
+    private Double practicalPercent;
     private boolean topicRequired; 
     private boolean groupRequired; 
 }
