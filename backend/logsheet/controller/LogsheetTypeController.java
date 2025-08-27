@@ -3,6 +3,8 @@ package com.sunbeam.logsheet.controller;
 import com.sunbeam.logsheet.DTO.LogsheetTypeDTO;
 import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.service.LogsheetTypeService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +14,8 @@ import java.util.List;
 @RequestMapping("/api/logsheet-types")
 public class LogsheetTypeController {
 
-    private final LogsheetTypeService logsheetTypeService;
-
-    public LogsheetTypeController(LogsheetTypeService logsheetTypeService) {
-        this.logsheetTypeService = logsheetTypeService;
-    }
+	@Autowired
+    private LogsheetTypeService logsheetTypeService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<LogsheetTypeDTO>> addLogsheetType(@RequestBody LogsheetTypeDTO dto) {
