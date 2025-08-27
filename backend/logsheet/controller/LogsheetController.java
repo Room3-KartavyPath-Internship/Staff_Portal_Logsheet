@@ -8,6 +8,7 @@ import com.sunbeam.logsheet.DTO.ApproveLogRequest;
 import com.sunbeam.logsheet.DTO.LogsheetCreateDTO;
 import com.sunbeam.logsheet.service.LogsheetService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +19,8 @@ import java.util.List;
 @RequestMapping("/api/logsheets")
 public class LogsheetController {
 
-    private final LogsheetService logsheetService;
-
-    public LogsheetController(LogsheetService logsheetService) {
-        this.logsheetService = logsheetService;
-    }
+	@Autowired
+    private LogsheetService logsheetService;
 
  
     @PostMapping
