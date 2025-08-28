@@ -13,6 +13,7 @@ import java.util.List;
 public interface LogsheetRepository extends JpaRepository<Logsheet, Long> {
 
   
+	
     List<Logsheet> findByCourseId(Long courseId);
 
     List<Logsheet> findByStaffId(Long staffId);

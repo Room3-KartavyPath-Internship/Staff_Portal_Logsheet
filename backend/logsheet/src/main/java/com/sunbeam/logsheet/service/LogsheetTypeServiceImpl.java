@@ -15,11 +15,13 @@ import java.util.stream.Collectors;
 @Service
 public class LogsheetTypeServiceImpl implements LogsheetTypeService {
 	
+
 	@Autowired
     private LogsheetTypeRepository repository;
 	@Autowired
     private ModelMapper mapper;
 
+	
     @Override
     public ApiResponse<LogsheetTypeDTO> addLogsheetType(LogsheetTypeDTO dto) {
         LogsheetType entity = mapper.map(dto, LogsheetType.class);
@@ -60,6 +62,7 @@ public class LogsheetTypeServiceImpl implements LogsheetTypeService {
                 mapper.map(updated, LogsheetTypeDTO.class));
     }
 
+    
     @Override
     public ApiResponse<Boolean> deleteLogsheetType(Long id) {
         if (!repository.existsById(id)) {
