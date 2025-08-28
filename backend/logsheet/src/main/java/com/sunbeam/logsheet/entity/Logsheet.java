@@ -17,10 +17,12 @@ import org.hibernate.annotations.OnDeleteAction;
 
 public class Logsheet {
 
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staff_id", nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
