@@ -1,0 +1,18 @@
+package com.sunbeam.logsheet.service;
+
+import com.sunbeam.logsheet.DTO.ApiResponse;
+import com.sunbeam.logsheet.DTO.StaffRequest;
+import com.sunbeam.logsheet.DTO.StaffResponse;
+import com.sunbeam.logsheet.DTO.StaffUpdateRequest;
+
+import java.util.List;
+
+public interface StaffService {
+    ApiResponse addStaff(StaffRequest staffRequest);
+    List<StaffResponse> getAllStaff();
+	ApiResponse updateStaff(Long id, StaffRequest request);
+	ApiResponse deleteStaff(Long id);
+	StaffResponse getStaffById(Long id);
+	ApiResponse updateStaff(Long id, StaffUpdateRequest request);
+}
+

@@ -71,7 +71,7 @@ public class StaffServiceImpl implements StaffService {
         staff.setEmail(request.getEmail());
         staff.setMobile(request.getMobile());
         staff.setStaffType(request.getStaffType());
-        // Do NOT set password here to avoid overwriting it
+        // not setting password here to avoid overwriting it
     }
 
 
