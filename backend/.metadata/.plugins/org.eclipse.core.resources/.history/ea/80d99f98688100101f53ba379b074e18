@@ -1,0 +1,151 @@
+package com.sunbeam.logsheet.service;
+
+import com.sunbeam.logsheet.DTO.ApiResponse;
+import com.sunbeam.logsheet.DTO.StaffRequest;
+import com.sunbeam.logsheet.DTO.StaffResponse;
+import com.sunbeam.logsheet.DTO.StaffUpdateRequest;
+import com.sunbeam.logsheet.entity.Role;
+import com.sunbeam.logsheet.entity.Staff;
+import com.sunbeam.logsheet.repository.RoleRepository;
+import com.sunbeam.logsheet.repository.StaffRepository;
+import com.sunbeam.logsheet.service.StaffService;
+
+import jakarta.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+@Transactional
+@Service
+public class StaffServiceImpl implements StaffService {
+
+    @Autowired
+    private StaffRepository staffRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+//    @Override
+//    public ApiResponse addStaff(StaffRequest request) {
+//        if (staffRepository.existsByEmail(request.getEmail())) {
+//            return new ApiResponse("Email already exists", false);
+//        }
+//
+//        Role role = roleRepository.findById(request.getRoleId())
+//                .orElseThrow(() -> new RuntimeException("Invalid Role Id"));
+//
+//        Staff staff = new Staff();
+//        mapRequestToEntity(request, staff);
+//        staff.setRole(role);
+//
+//        staffRepository.save(staff);
+//        return new ApiResponse("Staff added successfully", true);
+//    }
+    
+    @Override
+    public ApiResponse addStaff(StaffRequest request) {
+        if (staffRepository.existsByEmail(request.getEmail())) {
+            return new ApiResponse(false,"Email already exists", null);
+        }
+
+        Role role = roleRepository.findById(request.getRoleId())
+                .orElseThrow(() -> new RuntimeException("Invalid Role Id"));
+
+        Staff staff = new Staff();
+        mapRequestToEntity1(request, staff);
+        staff.setRole(role);
+
+        // Set password directly without encoding
+        staff.setPassword(request.getPassword());
+
+        staffRepository.save(staff);
+        return new ApiResponse(true,"Staff added successfully", staff);
+    }
+
+    private void mapRequestToEntity1(StaffRequest request, Staff staff) {
+        staff.setFirstName(request.getFirstName());
+        staff.setLastName(request.getLastName());
+        staff.setEmail(request.getEmail());
+        staff.setMobile(request.getMobile());
+        staff.setStaffType(request.getStaffType());
+        // Do NOT set password here to avoid overwriting it
+    }
+
+
+    @Override
+    public ApiResponse updateStaff(Long id, StaffUpdateRequest request) {
+        Staff staff = staffRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Staff not found"));
+
+        if (!staff.getEmail().equals(request.getEmail()) && staffRepository.existsByEmail(request.getEmail())) {
+            return new ApiResponse(false,"Email already exists", null);
+        }
+
+        Role role = roleRepository.findById(request.getRoleId())
+                .orElseThrow(() -> new RuntimeException("Invalid Role Id"));
+
+        staff.setFirstName(request.getFirstName());
+        staff.setLastName(request.getLastName());
+        staff.setEmail(request.getEmail());
+        staff.setMobile(request.getMobile());
+        staff.setStaffType(request.getStaffType());
+        staff.setRole(role);
+
+        staffRepository.save(staff);
+        return new ApiResponse(true,"Staff updated successfully", null);
+    }
+
+
+
+    @Override
+    public ApiResponse deleteStaff(Long id) {
+        Staff staff = staffRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Staff not found"));
+
+        staffRepository.delete(staff);
+        return new ApiResponse(true,"Staff deleted successfully", null);
+    }
+
+    @Override
+    public StaffResponse getStaffById(Long id) {
+        Staff staff = staffRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Staff not found"));
+
+        return mapEntityToResponse(staff);
+    }
+
+    @Override
+    public List<StaffResponse> getAllStaff() {
+        return staffRepository.findAll()
+                .stream()
+                .map(this::mapEntityToResponse)
+                .collect(Collectors.toList());
+    }
+
+//    private void mapRequestToEntity(StaffRequest request, Staff staff) {
+//        staff.setFirstName(request.getFirstName());
+//        staff.setLastName(request.getLastName());
+//        staff.setEmail(request.getEmail());
+//        staff.setMobile(request.getMobile());
+//        staff.setStaffType(request.getStaffType());
+//    }
+
+    private StaffResponse mapEntityToResponse(Staff staff) {
+        StaffResponse response = new StaffResponse();
+        response.setId(staff.getId());
+        response.setFullName(staff.getFirstName() + " " + staff.getLastName());
+        response.setEmail(staff.getEmail());
+        response.setMobile(staff.getMobile());
+        response.setStaff_type(staff.getStaffType());;
+        response.setRoleName(staff.getRole().getTitle());
+        return response;
+    }
+
+	@Override
+	public ApiResponse updateStaff(Long id, StaffRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
