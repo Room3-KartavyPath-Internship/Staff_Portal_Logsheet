@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface LogsheetRepository extends JpaRepository<Logsheet, Long> {
 
   
+	
     List<Logsheet> findByCourseId(Long courseId);
 
     List<Logsheet> findByStaffId(Long staffId);

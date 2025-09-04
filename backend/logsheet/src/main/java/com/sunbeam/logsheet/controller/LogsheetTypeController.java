@@ -17,6 +17,7 @@ public class LogsheetTypeController {
 	@Autowired
     private LogsheetTypeService logsheetTypeService;
 
+	
     @PostMapping
     public ResponseEntity<ApiResponse<LogsheetTypeDTO>> addLogsheetType(@RequestBody LogsheetTypeDTO dto) {
         LogsheetTypeDTO created = logsheetTypeService.addLogsheetType(dto).getData();
