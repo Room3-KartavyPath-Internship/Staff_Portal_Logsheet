@@ -1,0 +1,88 @@
+
+package com.sunbeam.logsheet.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sunbeam.logsheet.DTO.ForgotPasswordRequest;
+import com.sunbeam.logsheet.DTO.LoginRequest;
+import com.sunbeam.logsheet.DTO.LoginResponse;
+import com.sunbeam.logsheet.DTO.RegisterRequest;
+import com.sunbeam.logsheet.DTO.RegisterResponse;
+import com.sunbeam.logsheet.entity.Role;
+import com.sunbeam.logsheet.entity.Staff;
+import com.sunbeam.logsheet.entity.StaffType;
+import com.sunbeam.logsheet.repository.RoleRepository;
+import com.sunbeam.logsheet.repository.StaffRepository;
+
+
+@Service
+public class AuthServiceImpl implements AuthService {
+
+    @Autowired
+    private StaffRepository staffRepository;
+    
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Override
+    public LoginResponse login(LoginRequest request) {
+        Staff staff = staffRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (!staff.getPassword().equals(request.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        return new LoginResponse(
+              staff.getId(),
+              staff.getFirstName() + " " + staff.getLastName(),
+              staff.getRole().getTitle()
+      );
+    }
+    
+    @Service
+    public class AuthService {
+        @Autowired
+        private StaffRepository staffRepository;
+
+        @Autowired
+        private RoleRepository roleRepository;
+
+        public RegisterResponse register(RegisterRequest request) {
+            // 1. Find role from DB
+            Role role = roleRepository.findByTitleIgnoreCase(request.getRole())
+                    .orElseThrow(() -> new RuntimeException("Invalid role: " + request.getRole()));
+
+            // 2. Convert staffType string → Enum (default = IN_HOUSE)
+            StaffType staffType = StaffType.valueOf(
+                    request.getStaffType() != null ? request.getStaffType().toUpperCase() : "INHOUSE"
+            );
+
+            // 3. Create Staff entity
+            Staff staff = new Staff();
+            staff.setFirstName(request.getFirstName());
+            staff.setLastName(request.getLastName());
+            staff.setEmail(request.getEmail());
+            staff.setPassword(request.getPassword());
+            staff.setMobile(request.getMobile());
+            staff.setRole(role);
+            staff.setStaffType(staffType);
+
+            // 4. Save staff
+            Staff saved = staffRepository.save(staff);
+
+            // 5. Return response
+            return new RegisterResponse(
+                    saved.getId(),
+                    saved.getFirstName() + " " + saved.getLastName(),
+                    saved.getEmail(),
+                    saved.getRole().getTitle(),
+                    saved.getStaffType().toString(),
+                    "User registered successfully"
+            );
+        }
+    }
+
+}
+

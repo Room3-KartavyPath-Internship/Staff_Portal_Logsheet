@@ -3,11 +3,13 @@ package com.sunbeam.logsheet.repository;
 import com.sunbeam.logsheet.entity.Logsheet;
 import com.sunbeam.logsheet.entity.Logsheet.Status;
 import com.sunbeam.logsheet.entity.Logsheet.VerificationStatus;
+import com.sunbeam.logsheet.entity.Staff;
 import com.sunbeam.logsheet.entity.Logsheet.ApprovalStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LogsheetRepository extends JpaRepository<Logsheet, Long> {
@@ -26,4 +28,7 @@ public interface LogsheetRepository extends JpaRepository<Logsheet, Long> {
     List<Logsheet> findByModuleId(Long moduleId);
 
     List<Logsheet> findByEntryType(Logsheet.EntryType entryType);
+    
+//    Optional<Staff> findByEmail(String email);
+//    Optional<Staff> findByEmailAndPassword(String email, String password);
 }

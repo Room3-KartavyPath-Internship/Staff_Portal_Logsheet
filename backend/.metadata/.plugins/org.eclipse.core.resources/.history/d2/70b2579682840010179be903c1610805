@@ -1,0 +1,5 @@
+package com.sunbeam.logsheet.DTO;
+
+public class ForgotPasswordRequest {
+
+}

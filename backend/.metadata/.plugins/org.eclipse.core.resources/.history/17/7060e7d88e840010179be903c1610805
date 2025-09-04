@@ -1,0 +1,16 @@
+package com.sunbeam.logsheet.entity;
+
+public enum StaffType {
+    InHouse,
+   Visiting;
+
+public String trim() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+
+
+	
+}
