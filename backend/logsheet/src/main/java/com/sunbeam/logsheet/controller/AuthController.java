@@ -24,6 +24,8 @@
 //}
 package com.sunbeam.logsheet.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +35,7 @@ import com.sunbeam.logsheet.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:5173") 
 public class AuthController {
 
     @Autowired
@@ -52,10 +55,26 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ Forgot Password
+//    // ✅ Forgot Password
+//    @PostMapping("/forgot-password")
+//    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+//        String response = authService.forgotPassword(request);
+//        return ResponseEntity.ok(response);
+//    }
+    
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
-        String response = authService.forgotPassword(request);
+    public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String response = authService.sendResetLink(email);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
+        String newPassword = body.get("newPassword");
+        String response = authService.resetPassword(token, newPassword);
+        return ResponseEntity.ok(response);
+    }
+
 }
