@@ -1,39 +1,4 @@
-/*import React, { useState } from "react";
-import { forgotPassword } from "../services/api"; // Import API
-import "../styles/ForgotPassword.css"; // optional styling
 
-function ForgotPassword() {
-  const [email, setEmail] = useState("");
-
-  const handleForgotPassword = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await forgotPassword({ email });
-      alert(response.message || "Password reset instructions sent to your email!");
-    } catch (error) {
-      console.error("Forgot Password failed:", error);
-      alert("Failed to send reset link. Please try again.");
-    }
-  };
-
-  return (
-    <div className="container">
-      <h2>Forgot Password</h2>
-      <form onSubmit={handleForgotPassword}>
-        <input
-          type="email"
-          placeholder="Enter your registered email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">Send Reset Link</button>
-      </form>
-    </div>
-  );
-}
-
-export default ForgotPassword;*/
 import React, { useState } from "react";
 import axios from "axios";
 
