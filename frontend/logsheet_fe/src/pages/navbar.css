@@ -1,0 +1,73 @@
+/*.navbar {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: bold;
+}
+*/
+
+/* Remove default body margin/padding */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar container */
+.navbar {
+  background-color: rgba(0, 0, 0, 0.85); /* slightly darker for contrast */
+  padding: 10px 30px; /* a bit less padding to lift it */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: fixed; /* navbar stays on top while scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* stay above other content */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* subtle shadow for depth */
+}
+
+/* Brand styling */
+.navbar-brand {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Links styling */
+.navbar-links a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #f0a500; /* highlight color on hover */
+  text-decoration: underline;
+}
+
+/* Add spacing for page content below navbar */
+body {
+  padding-top: 60px; /* adjust based on navbar height */
+}
