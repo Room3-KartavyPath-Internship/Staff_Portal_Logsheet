@@ -54,7 +54,7 @@ public class Logsheet {
     private GroupMaster group;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "entry_type", nullable = false)
+    @Column(name = "entry_type")
     private EntryType entryType;
 
     @Column(name = "log_date", nullable = false)
@@ -65,7 +65,7 @@ public class Logsheet {
 
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status")
     private Status status = Status.New;
 
 
@@ -76,7 +76,7 @@ public class Logsheet {
     private LocalDateTime verifiedAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "verification_status", nullable = false)
+    @Column(name = "verification_status")
     private VerificationStatus verificationStatus = VerificationStatus.Pending;
 
  
@@ -87,7 +87,7 @@ public class Logsheet {
     private LocalDateTime approvedAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "approval_status", nullable = false)
+    @Column(name = "approval_status")
     private ApprovalStatus approvalStatus = ApprovalStatus.Pending;
 
  
