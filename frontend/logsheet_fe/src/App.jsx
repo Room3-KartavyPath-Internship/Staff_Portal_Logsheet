@@ -1,30 +1,92 @@
+// src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ForgotPassword from "./pages/ForgotPassword";
-import BatchCycle from "./pages/BatchCycle";
-import BatchCycleList from "./pages/BatchCycleList";
-import BatchCycleDetails from "./pages/BatchCycleDetails";
-import BatchCycleUpdate from "./pages/BatchCycleUpdate";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+// Components
+import Navbar from "./components/Navbar";
+
+// Auth Pages
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+
+// Auth utilities
+import { isAuthenticated } from "./services/authApi";
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  return isAuthenticated() ? children : <Navigate to="/login" replace />;
+};
+
+// Public Route Component
+const PublicRoute = ({ children }) => {
+  return !isAuthenticated() ? children : <Navigate to="/" replace />;
+};
+
+// Home Component
+const Home = () => {
+  return (
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h1>Welcome to Logsheet Management</h1>
+      
+    </div>
+  );
+};
+
+const App = () => {
   return (
     <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/batch-cycles/new" element={<BatchCycle />} />
-        <Route path="/batch-cycles" element={<BatchCycleList />} />
-        <Route path="/batch-cycles/:id" element={<BatchCycleDetails />} />
-        <Route path="/batch-cycles/update/:id" element={<BatchCycleUpdate />} />
+      <div className="App">
+        <Navbar />
         
-      </Routes>
+        <Routes>
+          {/* Public Routes */}
+          <Route 
+            path="/login" 
+            element={<PublicRoute><Login /></PublicRoute>} 
+          />
+          <Route 
+            path="/register" 
+            element={<PublicRoute><Register /></PublicRoute>} 
+          />
+          <Route 
+            path="/forgot-password" 
+            element={<PublicRoute><ForgotPassword /></PublicRoute>} 
+          />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          
+          {/* Protected Routes */}
+          <Route 
+            path="/" 
+            element={<ProtectedRoute><Home /></ProtectedRoute>} 
+          />
+          
+          {/* Future routes */}
+          <Route 
+            path="/add-log" 
+            element={<ProtectedRoute><div style={{padding: "20px"}}>Add Log Page - Coming Soon</div></ProtectedRoute>} 
+          />
+          
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        
+        <ToastContainer 
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
     </Router>
   );
-}
+};
 
 export default App;
