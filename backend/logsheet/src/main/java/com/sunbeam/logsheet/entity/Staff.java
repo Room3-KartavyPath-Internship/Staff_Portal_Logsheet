@@ -1,6 +1,8 @@
 package com.sunbeam.logsheet.entity;
 
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,4 +46,12 @@ private Role role;
 @Enumerated(EnumType.STRING)
 @Column(nullable = false)
 private StaffType staffType;
+
+
+@Column(name = "reset_token")
+private String resetToken;
+
+@Column(name = "reset_token_expiry")
+private LocalDateTime resetTokenExpiry;
+
 }

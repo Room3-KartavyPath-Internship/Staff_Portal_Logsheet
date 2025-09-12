@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//Staff Functionality Done By Shivani Patil(Me).
+
 @RestController
 @RequestMapping("/api/staff")
 public class StaffController {

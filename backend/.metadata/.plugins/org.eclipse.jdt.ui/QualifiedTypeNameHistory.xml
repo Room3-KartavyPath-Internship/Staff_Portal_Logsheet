@@ -1,8 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.sunbeam.logsheet.repository.ModuleRepository"/>
-    <fullyQualifiedTypeName name="com.sunbeam.logsheet.entity.Module"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
-    <fullyQualifiedTypeName name="com.sunbeam.logsheet.repository.RoleRepository"/>
-    <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
-</qualifiedTypeNameHistroy>
+<qualifiedTypeNameHistroy/>

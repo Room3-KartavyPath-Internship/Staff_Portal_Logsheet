@@ -2,8 +2,6 @@ package com.sunbeam.logsheet.DTO;
 
 
 
-import java.util.List;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +12,6 @@ public class ApiResponse<T> {
     private boolean success;
     private String message;
     private T data;
-  
    
     
     public ApiResponse(String message) {
@@ -36,7 +33,8 @@ public class ApiResponse<T> {
 		this.success = success;
 		this.data = data;
 	}
-
-
+	
+	
+    
     
 }
