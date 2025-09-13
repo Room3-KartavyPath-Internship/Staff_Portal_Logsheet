@@ -150,7 +150,13 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	
 	
 	@Override
-	public ApiResponse addModule(ModuleDto dto) {
+	public ApiResponse<?> addModule(ModuleDto dto) {
+		 moduleRepo.findByTitle(dto.getTitle())
+	        .ifPresent(m -> {
+	            throw new RuntimeException("Module with title '" + dto.getTitle() + "' already exists");
+	        });
+		
+		
 	    Module module = new Module();
 	    module.setTitle(dto.getTitle());
 	    module.setDescription(dto.getDescription());
@@ -166,7 +172,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    }
 
 	    moduleRepo.save(module);
-	    return new ApiResponse("Module added successfully", true);
+	    return new ApiResponse<>("Module added successfully", true);
 	}
 
 	@Transactional
@@ -188,7 +194,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	}
 
 	@Override
-	public ApiResponse updateModule(Long id, ModuleDto dto) {
+	public ApiResponse<?> updateModule(Long id, ModuleDto dto) {
 	    Module module = moduleRepo.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Module not found"));
 
@@ -206,21 +212,13 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    }
 
 	    moduleRepo.save(module);
-	    return new ApiResponse("Module updated successfully", true);
+	    return new ApiResponse<>("Module updated successfully", true);
 	}
 
-//	@Override
-//	public ApiResponse deleteModule(Long id) {
-//	    if (!moduleRepo.existsById(id)) {
-//	        return new ApiResponse("Module not found", false);
-//	    }
-//	    moduleRepo.deleteById(id);
-//	    return new ApiResponse("Module deleted", true);
-//	}
 	
 	@Transactional
 	@Override
-	public ApiResponse deleteModule(Long id) {
+	public ApiResponse<?> deleteModule(Long id) {
 	    Module module = moduleRepo.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Module not found"));
 
@@ -231,7 +229,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    // Now delete safely
 	    moduleRepo.delete(module);
 
-	    return new ApiResponse("Module deleted successfully", true);
+	    return new ApiResponse<>("Module deleted successfully", true);
 	}
 
     

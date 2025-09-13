@@ -2,6 +2,7 @@ package com.sunbeam.logsheet.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +13,9 @@ import com.sunbeam.logsheet.service.PremisesService;
 @RestController
 @RequestMapping("/api/premises")
 public class PremisesController {
-    
-    private final PremisesService service;
+   
+	@Autowired
+    private PremisesService service;
 
     public PremisesController(PremisesService service) {
         this.service = service;
@@ -25,7 +27,7 @@ public class PremisesController {
         return ResponseEntity.ok(new ApiResponse<>("Premises created successfully!", true));
     }
 
-
+    @GetMapping("/all")
     public ResponseEntity<List<Premises>> getAllPremises() {
         return ResponseEntity.ok(service.getAllPremises());
     }

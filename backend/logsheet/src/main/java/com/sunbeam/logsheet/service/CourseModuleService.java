@@ -32,8 +32,8 @@ public interface CourseModuleService {
     ApiResponse<?> deleteTopic(Long id);
     
     
-    ApiResponse addModule(ModuleDto dto);
+    ApiResponse<?> addModule(ModuleDto dto);
     List<ModuleDto> getAllModules();
-    ApiResponse updateModule(Long id, ModuleDto dto);
-    ApiResponse deleteModule(Long id);
+    ApiResponse<?> updateModule(Long id, ModuleDto dto);
+    ApiResponse<?> deleteModule(Long id);
 }
