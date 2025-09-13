@@ -25,10 +25,7 @@ public class Module {
     private int practicalHours;
 
     private Long moduleRouterId; // staff id reference
-//
-//    // Simplified Many-to-Many (JPA auto-manages module_subjects table)
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    private Set<Subject> subjects;
+
     
     @ManyToMany
     @JoinTable(
