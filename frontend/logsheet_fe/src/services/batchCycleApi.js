@@ -1,4 +1,5 @@
 import api from "./apiClient";
+import { config } from "./config";
 
 // Create
 export const createBatchCycle = async (payload) => {
@@ -9,11 +10,11 @@ export const createBatchCycle = async (payload) => {
 
 // Read all
 export const getAllBatchCycles = async () => {
-  const res = await api.get("/batch-cycles");
+  const res = await api.get(`${config.serverBaseUrl}/batch-cycles`);
   return res.data; // array of BatchCycle
 };
 
-// Read one
+// Read one 
 export const getBatchCycleById = async (id) => {
   const res = await api.get(`/batch-cycles/${id}`);
   return res.data; // single BatchCycle

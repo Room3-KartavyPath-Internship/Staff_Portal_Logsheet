@@ -10,4 +10,5 @@ public class GroupResponseDTO {
 	private int id;
     private String name;
     private String description;
+    private Long courseId;
 }

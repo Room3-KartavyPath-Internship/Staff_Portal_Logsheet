@@ -72,7 +72,27 @@ public class GroupMasterServiceImpl implements GroupMasterService {
     public List<GroupResponseDTO> getAllGroups() {
         return groupMasterRepository.findAll()
                 .stream()
-                .map(group -> modelMapper.map(group, GroupResponseDTO.class))
+                .map(group -> {
+                    GroupResponseDTO dto = modelMapper.map(group, GroupResponseDTO.class);
+                    if (group.getCourse() != null) {
+                        dto.setCourseId(group.getCourse().getId());
+                    }
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public GroupResponseDTO getGroupById(Long id) {
+        GroupMaster group = groupMasterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
+        GroupResponseDTO dto = modelMapper.map(group, GroupResponseDTO.class);
+        if (group.getCourse() != null) {
+            dto.setCourseId(group.getCourse().getId());
+        }
+
+        return dto;
+    }
+    
+    
 }
