@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/groups")
+@CrossOrigin("*")
 public class GroupMasterController {
 
     @Autowired
@@ -37,5 +38,10 @@ public class GroupMasterController {
     @GetMapping
     public ResponseEntity<ApiResponse<?>> getAllGroups() {
         return ResponseEntity.ok(new ApiResponse<>("All Groups",true,groupMasterService.getAllGroups()));
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<?>> getGroupbyId(@PathVariable Long id){
+    	return ResponseEntity.ok(new ApiResponse<>("Successfully Fetched",true,groupMasterService.getGroupById(id)));
     }
 }

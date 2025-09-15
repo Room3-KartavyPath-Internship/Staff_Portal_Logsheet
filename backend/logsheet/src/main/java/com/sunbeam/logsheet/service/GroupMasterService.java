@@ -11,4 +11,6 @@ public interface GroupMasterService {
     ApiResponse<?> updateGroup(Long id, GroupRequestDTO dto);
     ApiResponse<?> deleteGroup(Long id);
     List<GroupResponseDTO> getAllGroups();
+    GroupResponseDTO getGroupById(Long id);
+
 }

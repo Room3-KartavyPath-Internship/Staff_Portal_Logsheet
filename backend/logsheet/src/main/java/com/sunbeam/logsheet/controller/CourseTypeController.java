@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/course-types")
+@CrossOrigin("*")
 public class CourseTypeController {
 
     @Autowired
@@ -25,9 +26,9 @@ public class CourseTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseType> getCourseType(@PathVariable Long id) {
+    public ResponseEntity<?> getCourseType(@PathVariable Long id) {
         CourseType courseType = courseTypeService.getCourseType(id);
-        return ResponseEntity.ok(courseType);
+        return ResponseEntity.ok(new ApiResponse<>("Successfully Fetched",true,courseType));
     }
     
     @PutMapping("/{id}")

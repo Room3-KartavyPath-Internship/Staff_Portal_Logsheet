@@ -25,8 +25,8 @@ public class CourseController {
 
  
     @GetMapping
-    public ResponseEntity<List<CourseDTO>> getAllCourses() {
-        return ResponseEntity.ok(courseService.getAllCourses());
+    public ResponseEntity<?> getAllCourses() {
+        return ResponseEntity.ok(new ApiResponse<>("Successfully Fetched",true,courseService.getAllCourses()));
     }
 
  
