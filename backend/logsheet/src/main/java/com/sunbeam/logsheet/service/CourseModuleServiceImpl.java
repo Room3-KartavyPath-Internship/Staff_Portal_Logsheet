@@ -33,7 +33,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
     private SectionRepository sectionRepo;
     
     @Autowired
-    private TopicRepository topicRepo;
+    private TopicRepository topicRepository;  // <-- Add here
     
     @Autowired
     private ModuleRepository moduleRepo;
@@ -112,40 +112,59 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	@Override
 	public ApiResponse<?> addTopic(TopicDto dto) {
 		Section section = sectionRepo.findById(dto.getSectionId())
-                .orElseThrow(() -> new RuntimeException("Section not found"));
-        Topic topic = new Topic();
-        topic.setName(dto.getName());
-        topic.setSection(section);
-        topicRepo.save(topic);
-        return new ApiResponse<>("Topic added successfully", true);
+	            .orElseThrow(() -> new RuntimeException("Section not found"));
+
+	    Topic topic = new Topic();
+	    topic.setName(dto.getName());
+	    topic.setSection(section);
+	    topicRepository.save(topic);
+
+	    return new ApiResponse<>("Topic added successfully", true); // ✅ message field
 	}
 
 	@Override
 	public List<TopicDto> getAllTopics() {
-		 return topicRepo.findAll().stream()
+		 return topicRepository.findAll().stream()
 	                .map(top -> new TopicDto(top.getId(), top.getName(), top.getSection().getId()))
 	                .collect(Collectors.toList());
 	}
+	
+	@Override
+	public TopicDto getTopicById(Long id) {
+	    Topic topic = topicRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Topic not found"));
+
+	    TopicDto dto = new TopicDto();
+	    dto.setId(topic.getId());
+	    dto.setName(topic.getName());
+	    dto.setSectionId(topic.getSection().getId());
+
+	    return dto;
+	}
+
 
 	@Override
 	public ApiResponse<?> updateTopic(Long id, TopicDto dto) {
-		Topic topic = topicRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Topic not found"));
-        Section section = sectionRepo.findById(dto.getSectionId())
-                .orElseThrow(() -> new RuntimeException("Section not found"));
-        topic.setName(dto.getName());
-        topic.setSection(section);
-        topicRepo.save(topic);
-        return new ApiResponse<>("Topic updated", true);
+		Topic topic = topicRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Topic not found"));
+
+	    Section section = sectionRepo.findById(dto.getSectionId())
+	            .orElseThrow(() -> new RuntimeException("Section not found"));
+
+	    topic.setName(dto.getName());
+	    topic.setSection(section);
+	    topicRepository.save(topic);
+
+	    return new ApiResponse<>("Topic updated successfully", true); // ✅ message field
 	}
 
 	@Override
 	public ApiResponse<?> deleteTopic(Long id) {
-		if (!topicRepo.existsById(id)) {
-            return new ApiResponse<>("Topic not found", false);
-        }
-        topicRepo.deleteById(id);
-        return new ApiResponse<>("Topic deleted", true);
+		if (!topicRepository.existsById(id)) {
+	        return new ApiResponse<>("Topic not found", false); // ✅ message field
+	    }
+	    topicRepository.deleteById(id);
+	    return new ApiResponse<>("Topic deleted successfully", true); // ✅ message field
 	}
 	
 	

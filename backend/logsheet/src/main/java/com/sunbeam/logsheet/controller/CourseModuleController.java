@@ -8,12 +8,14 @@ import com.sunbeam.logsheet.DTO.ModuleDto;
 import com.sunbeam.logsheet.DTO.SectionDto;
 import com.sunbeam.logsheet.DTO.SubjectDto;
 import com.sunbeam.logsheet.DTO.TopicDto;
+import com.sunbeam.logsheet.entity.Topic;
 import com.sunbeam.logsheet.service.CourseModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/modules")
@@ -72,25 +74,32 @@ public class CourseModuleController {
     
     @PostMapping("/topic")
     public ResponseEntity<ApiResponse<?>> addTopic(@RequestBody TopicDto dto) {
-        service.addTopic(dto);
-        return ResponseEntity.ok(new ApiResponse<>("Topic added successfully", true));
+        ApiResponse<?> response = service.addTopic(dto);
+        return ResponseEntity.ok(response); // ✅ message included
     }
 
     @GetMapping("/topics")
     public ResponseEntity<List<TopicDto>> getTopics() {
         return ResponseEntity.ok(service.getAllTopics());
     }
+    
+    @GetMapping("/topic/{id}")
+    public ResponseEntity<TopicDto> getTopicById(@PathVariable Long id) {
+        TopicDto dto = service.getTopicById(id);  // Call service method
+        return ResponseEntity.ok(dto);
+    }
+
 
     @PutMapping("/topic/{id}")
     public ResponseEntity<ApiResponse<?>> updateTopic(@PathVariable Long id, @RequestBody TopicDto dto) {
-        service.updateTopic(id, dto);
-        return ResponseEntity.ok(new ApiResponse<>("Topic updated successfully", true));
+        ApiResponse<?> response = service.updateTopic(id, dto);
+        return ResponseEntity.ok(response); // ✅ message included
     }
 
     @DeleteMapping("/topic/{id}")
     public ResponseEntity<ApiResponse<?>> deleteTopic(@PathVariable Long id) {
-        service.deleteTopic(id);
-        return ResponseEntity.ok(new ApiResponse<>("Topic deleted successfully", true));
+        ApiResponse<?> response = service.deleteTopic(id);
+        return ResponseEntity.ok(response); // ✅ message included
     }
     
     @PostMapping("/module")
