@@ -33,7 +33,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
     private SectionRepository sectionRepo;
     
     @Autowired
-    private TopicRepository topicRepository;  // <-- Add here
+    private TopicRepository topicRepository; 
     
     @Autowired
     private ModuleRepository moduleRepo;
@@ -119,7 +119,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    topic.setSection(section);
 	    topicRepository.save(topic);
 
-	    return new ApiResponse<>("Topic added successfully", true); // ✅ message field
+	    return new ApiResponse<>("Topic added successfully", true); 
 	}
 
 	@Override
@@ -155,16 +155,16 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    topic.setSection(section);
 	    topicRepository.save(topic);
 
-	    return new ApiResponse<>("Topic updated successfully", true); // ✅ message field
+	    return new ApiResponse<>("Topic updated successfully", true); 
 	}
 
 	@Override
 	public ApiResponse<?> deleteTopic(Long id) {
 		if (!topicRepository.existsById(id)) {
-	        return new ApiResponse<>("Topic not found", false); // ✅ message field
+	        return new ApiResponse<>("Topic not found", false); 
 	    }
 	    topicRepository.deleteById(id);
-	    return new ApiResponse<>("Topic deleted successfully", true); // ✅ message field
+	    return new ApiResponse<>("Topic deleted successfully", true); 
 	}
 	
 	
@@ -206,7 +206,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	                    mod.getPracticalHours(),
 	                    mod.getModuleRouterId(),
 	                    mod.getSubjects().stream()
-	                            .map(Subject::getId) // Access inside transaction
+	                            .map(Subject::getId) 
 	                            .collect(Collectors.toSet())
 	            ))
 	            .collect(Collectors.toList());
@@ -241,11 +241,11 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    Module module = moduleRepo.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Module not found"));
 
-	    // Clear subjects to remove join-table entries
+	    
 	    module.getSubjects().clear();
-	    moduleRepo.save(module); // Update module after clearing relations
+	    moduleRepo.save(module); 
 
-	    // Now delete safely
+	    
 	    moduleRepo.delete(module);
 
 	    return new ApiResponse<>("Module deleted successfully", true);
