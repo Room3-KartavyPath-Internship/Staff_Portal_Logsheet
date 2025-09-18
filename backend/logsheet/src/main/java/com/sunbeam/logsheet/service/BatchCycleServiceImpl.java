@@ -1,5 +1,3 @@
-
-
 package com.sunbeam.logsheet.service;
 
 import com.sunbeam.logsheet.DTO.ApiResponse;
@@ -19,12 +17,13 @@ public class BatchCycleServiceImpl implements IBatchCycleService {
     }
 
     @Override
-    public BatchCycle addBatchCycle(BatchCycle batchCycle) {
+    public ApiResponse<?> addBatchCycle(BatchCycle batchCycle) {
         repository.findByTitle(batchCycle.getTitle())
                 .ifPresent(bc -> {
                     throw new RuntimeException("Batch cycle with title '" + batchCycle.getTitle() + "' already exists");
                 });
-        return repository.save(batchCycle);
+        repository.save(batchCycle);
+        return new ApiResponse<>("Batch cycle added successfully", true);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class BatchCycleServiceImpl implements IBatchCycleService {
         existing.setEndDate(updatedCycle.getEndDate());
 
         repository.save(existing);
-        return new ApiResponse<>("Updated Successfully", true);
+        return new ApiResponse<>("Batch cycle updated successfully", true);
     }
 
     @Override
@@ -58,6 +57,6 @@ public class BatchCycleServiceImpl implements IBatchCycleService {
                 .orElseThrow(() -> new RuntimeException("Batch cycle with ID " + id + " not found"));
 
         repository.delete(batchCycle);
-        return new ApiResponse<>("Successfully deleted", true);
+        return new ApiResponse<>("Batch cycle deleted successfully", true);
     }
 }

@@ -6,10 +6,9 @@ import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.entity.BatchCycle;
 
 public interface IBatchCycleService {
-	 BatchCycle addBatchCycle(BatchCycle batchCycle);
-	    List<BatchCycle> getAllBatchCycles();
-	    BatchCycle getBatchCycleById(Long id);
-	    ApiResponse<?> updateBatchCycle(Long id, BatchCycle updatedCycle);
-
-	    ApiResponse<?> deleteBatchCycle(Long id);
+	ApiResponse<?> addBatchCycle(BatchCycle batchCycle);
+    List<BatchCycle> getAllBatchCycles();
+    BatchCycle getBatchCycleById(Long id);
+    ApiResponse<?> updateBatchCycle(Long id, BatchCycle updatedCycle);
+    ApiResponse<?> deleteBatchCycle(Long id);
 }
