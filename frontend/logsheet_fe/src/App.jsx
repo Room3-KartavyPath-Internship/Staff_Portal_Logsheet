@@ -15,6 +15,10 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./routes/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
+import BatchCycleList from "./pages/BatchCycle/BatchCycleList";
+import AddBatchCycle from "./pages/BatchCycle/AddBatchCycle"; 
+import EditBatchCycle from "./pages/BatchCycle/EditBatchCycle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -55,6 +59,12 @@ function App() {
               <Route path="/courses" element={<CourseList />} />
               <Route path="/courses/add" element={<CourseForm />} />
               <Route path="/courses/edit/:id" element={<CourseForm />} />
+            </Route>
+
+            <Route element={<PrivateRoute requiredPath="/batch-cycles" />}>
+              <Route path="/batch-cycles" element={<BatchCycleList />} />
+      <Route path="/batch-cycles/add" element={<AddBatchCycle />} />
+      <Route path="/batch-cycles/edit/:id" element={<EditBatchCycle />} />
             </Route>
           </Routes>
         </div>
