@@ -1,6 +1,3 @@
-
-
-
 package com.sunbeam.logsheet.controller;
 
 import com.sunbeam.logsheet.DTO.ApiResponse;
@@ -8,18 +5,16 @@ import com.sunbeam.logsheet.DTO.ModuleDto;
 import com.sunbeam.logsheet.DTO.SectionDto;
 import com.sunbeam.logsheet.DTO.SubjectDto;
 import com.sunbeam.logsheet.DTO.TopicDto;
-import com.sunbeam.logsheet.entity.Topic;
 import com.sunbeam.logsheet.service.CourseModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/modules")
-
+@CrossOrigin("*")
 public class CourseModuleController {
 
     @Autowired
@@ -75,32 +70,25 @@ public class CourseModuleController {
     
     @PostMapping("/topic")
     public ResponseEntity<ApiResponse<?>> addTopic(@RequestBody TopicDto dto) {
-        ApiResponse<?> response = service.addTopic(dto);
-        return ResponseEntity.ok(response); // ✅ message included
+        service.addTopic(dto);
+        return ResponseEntity.ok(new ApiResponse<>("Topic added successfully", true));
     }
 
     @GetMapping("/topics")
     public ResponseEntity<List<TopicDto>> getTopics() {
         return ResponseEntity.ok(service.getAllTopics());
     }
-    
-    @GetMapping("/topic/{id}")
-    public ResponseEntity<TopicDto> getTopicById(@PathVariable Long id) {
-        TopicDto dto = service.getTopicById(id);  // Call service method
-        return ResponseEntity.ok(dto);
-    }
-
 
     @PutMapping("/topic/{id}")
     public ResponseEntity<ApiResponse<?>> updateTopic(@PathVariable Long id, @RequestBody TopicDto dto) {
-        ApiResponse<?> response = service.updateTopic(id, dto);
-        return ResponseEntity.ok(response); // ✅ message included
+        service.updateTopic(id, dto);
+        return ResponseEntity.ok(new ApiResponse<>("Topic updated successfully", true));
     }
 
     @DeleteMapping("/topic/{id}")
     public ResponseEntity<ApiResponse<?>> deleteTopic(@PathVariable Long id) {
-        ApiResponse<?> response = service.deleteTopic(id);
-        return ResponseEntity.ok(response); // ✅ message included
+        service.deleteTopic(id);
+        return ResponseEntity.ok(new ApiResponse<>("Topic deleted successfully", true));
     }
     
     @PostMapping("/module")
@@ -109,10 +97,13 @@ public class CourseModuleController {
         return ResponseEntity.ok(new ApiResponse<>("Module added successfully",true));
     }
 
+    
     @GetMapping("/modules")
-    public ResponseEntity<List<ModuleDto>> getModules() {
-        return ResponseEntity.ok(service.getAllModules());
+    public ResponseEntity<ApiResponse<List<ModuleDto>>> getModules() {
+        return ResponseEntity.ok(new ApiResponse<>("Fetched successfully", true ,service.getAllModules()));
     }
+
+  
 
     @PutMapping("/module/{id}")
     public ResponseEntity<ApiResponse<?>> updateModule(@PathVariable Long id, @RequestBody ModuleDto dto) {
@@ -125,6 +116,13 @@ public class CourseModuleController {
         service.deleteModule(id);
         return ResponseEntity.ok(new ApiResponse<>("Module deleted successfully",true));
     }
+    
+    @GetMapping("/module/{id}")
+    public ResponseEntity<ApiResponse<ModuleDto>> getModuleById(@PathVariable Long id) {
+        ModuleDto dto = service.getModuleById(id);
+        return ResponseEntity.ok(new ApiResponse<>("Fetched successfully", true, dto));
+    }
+
 
 
 }

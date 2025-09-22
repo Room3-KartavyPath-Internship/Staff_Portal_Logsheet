@@ -28,7 +28,6 @@ public interface CourseModuleService {
  
     ApiResponse<?> addTopic(TopicDto dto);
     List<TopicDto> getAllTopics();
-    TopicDto getTopicById(Long id);
     ApiResponse<?> updateTopic(Long id, TopicDto dto);
     ApiResponse<?> deleteTopic(Long id);
     
@@ -37,4 +36,5 @@ public interface CourseModuleService {
     List<ModuleDto> getAllModules();
     ApiResponse<?> updateModule(Long id, ModuleDto dto);
     ApiResponse<?> deleteModule(Long id);
+	ModuleDto getModuleById(Long id);
 }
