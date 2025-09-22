@@ -1,6 +1,9 @@
 
 package com.sunbeam.logsheet.DTO;
 
+import java.time.LocalDate;
+
+
 import lombok.*;
 
 @Getter
@@ -9,9 +12,14 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class LogsheetUpdateDTO {
-    private Long id;            
-    private Long topicId;       
-    private Long groupId;       
-    private String entryType;   
-    private String description; 
+	private Long staffId;
+    private Long courseId;
+    private Long moduleId;
+    private Long topicId;
+    private Long logsheetTypeId;
+    private Long groupId;
+    private String entryType;
+    private LocalDate logDate;
+    private String description;
+    private String status;
 }

@@ -19,12 +19,10 @@ import java.util.List;
 @RequestMapping("/api/logsheets")
 public class LogsheetController {
 
-	
 	@Autowired
     private LogsheetService logsheetService;
 
  
-	
     @PostMapping
     public ResponseEntity<ApiResponse<LogsheetDTO>> addLogsheet(@RequestBody LogsheetCreateDTO dto) {
         LogsheetDTO created = logsheetService.addLogsheet(dto).getData();
