@@ -66,30 +66,56 @@ public class LogsheetServiceImpl implements LogsheetService {
     @Override
     public ApiResponse<LogsheetDTO> updateLogsheet(Long id, LogsheetUpdateDTO dto) {
         Logsheet existing = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Logsheet not found with id: " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Logsheet not found with id: " + id));
 
-        
         if (dto.getEntryType() != null) {
-            existing.setEntryType(Logsheet.EntryType.valueOf(dto.getEntryType())); 
+            existing.setEntryType(Logsheet.EntryType.valueOf(dto.getEntryType()));
         }
         if (dto.getDescription() != null) {
             existing.setDescription(dto.getDescription());
         }
+        if (dto.getStatus() != null) {
+            existing.setStatus(Logsheet.Status.valueOf(dto.getStatus()));
+        }
+        if (dto.getLogDate() != null) {
+            existing.setLogDate(dto.getLogDate().atStartOfDay());
+        }
+
+        if (dto.getStaffId() != null) {
+            existing.setStaff(staffRepository.findById(dto.getStaffId())
+                .orElseThrow(() -> new ResourceNotFoundException("Staff not found")));
+        }
+        if (dto.getCourseId() != null) {
+            existing.setCourse(courseRepository.findById(dto.getCourseId())
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found")));
+        }
+        if (dto.getModuleId() != null) {
+            existing.setModule(moduleRepository.findById(dto.getModuleId())
+                .orElseThrow(() -> new ResourceNotFoundException("Module not found")));
+        }
         if (dto.getTopicId() != null) {
             existing.setTopic(topicRepository.findById(dto.getTopicId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Topic not found with id: " + dto.getTopicId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Topic not found")));
         } else {
             existing.setTopic(null);
         }
-        
+
+        if (dto.getLogsheetTypeId() != null) {
+            existing.setLogsheetType(logsheetTypeRepository.findById(dto.getLogsheetTypeId())
+                .orElseThrow(() -> new ResourceNotFoundException("Logsheet type not found")));
+        }
+
         if (dto.getGroupId() != null) {
             existing.setGroup(groupRepository.findById(dto.getGroupId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Group not found with id: " + dto.getGroupId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Group not found")));
+        } else {
+            existing.setGroup(null);
         }
 
         Logsheet updated = repository.save(existing);
         return new ApiResponse<>("Logsheet updated successfully", true, mapEntityToDto(updated));
     }
+
 
 
   

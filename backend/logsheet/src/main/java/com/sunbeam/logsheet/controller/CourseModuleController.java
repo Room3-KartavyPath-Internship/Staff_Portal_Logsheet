@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/modules")
-@CrossOrigin("*")
 public class CourseModuleController {
 
     @Autowired
