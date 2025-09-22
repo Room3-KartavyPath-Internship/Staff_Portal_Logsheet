@@ -33,7 +33,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
     private SectionRepository sectionRepo;
     
     @Autowired
-    private TopicRepository topicRepository; 
+    private TopicRepository topicRepo;
     
     @Autowired
     private ModuleRepository moduleRepo;
@@ -112,59 +112,40 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	@Override
 	public ApiResponse<?> addTopic(TopicDto dto) {
 		Section section = sectionRepo.findById(dto.getSectionId())
-	            .orElseThrow(() -> new RuntimeException("Section not found"));
-
-	    Topic topic = new Topic();
-	    topic.setName(dto.getName());
-	    topic.setSection(section);
-	    topicRepository.save(topic);
-
-	    return new ApiResponse<>("Topic added successfully", true); 
+                .orElseThrow(() -> new RuntimeException("Section not found"));
+        Topic topic = new Topic();
+        topic.setName(dto.getName());
+        topic.setSection(section);
+        topicRepo.save(topic);
+        return new ApiResponse<>("Topic added successfully", true);
 	}
 
 	@Override
 	public List<TopicDto> getAllTopics() {
-		 return topicRepository.findAll().stream()
+		 return topicRepo.findAll().stream()
 	                .map(top -> new TopicDto(top.getId(), top.getName(), top.getSection().getId()))
 	                .collect(Collectors.toList());
 	}
-	
-	@Override
-	public TopicDto getTopicById(Long id) {
-	    Topic topic = topicRepository.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Topic not found"));
-
-	    TopicDto dto = new TopicDto();
-	    dto.setId(topic.getId());
-	    dto.setName(topic.getName());
-	    dto.setSectionId(topic.getSection().getId());
-
-	    return dto;
-	}
-
 
 	@Override
 	public ApiResponse<?> updateTopic(Long id, TopicDto dto) {
-		Topic topic = topicRepository.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Topic not found"));
-
-	    Section section = sectionRepo.findById(dto.getSectionId())
-	            .orElseThrow(() -> new RuntimeException("Section not found"));
-
-	    topic.setName(dto.getName());
-	    topic.setSection(section);
-	    topicRepository.save(topic);
-
-	    return new ApiResponse<>("Topic updated successfully", true); 
+		Topic topic = topicRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Topic not found"));
+        Section section = sectionRepo.findById(dto.getSectionId())
+                .orElseThrow(() -> new RuntimeException("Section not found"));
+        topic.setName(dto.getName());
+        topic.setSection(section);
+        topicRepo.save(topic);
+        return new ApiResponse<>("Topic updated", true);
 	}
 
 	@Override
 	public ApiResponse<?> deleteTopic(Long id) {
-		if (!topicRepository.existsById(id)) {
-	        return new ApiResponse<>("Topic not found", false); 
-	    }
-	    topicRepository.deleteById(id);
-	    return new ApiResponse<>("Topic deleted successfully", true); 
+		if (!topicRepo.existsById(id)) {
+            return new ApiResponse<>("Topic not found", false);
+        }
+        topicRepo.deleteById(id);
+        return new ApiResponse<>("Topic deleted", true);
 	}
 	
 	
@@ -206,7 +187,7 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	                    mod.getPracticalHours(),
 	                    mod.getModuleRouterId(),
 	                    mod.getSubjects().stream()
-	                            .map(Subject::getId) 
+	                            .map(Subject::getId) // Access inside transaction
 	                            .collect(Collectors.toSet())
 	            ))
 	            .collect(Collectors.toList());
@@ -241,17 +222,35 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    Module module = moduleRepo.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Module not found"));
 
-	    
+	    // Clear subjects to remove join-table entries
 	    module.getSubjects().clear();
-	    moduleRepo.save(module); 
+	    moduleRepo.save(module); // Update module after clearing relations
 
-	    
+	    // Now delete safely
 	    moduleRepo.delete(module);
 
 	    return new ApiResponse<>("Module deleted successfully", true);
 	}
-
     
+	@Transactional
+	@Override
+	public ModuleDto getModuleById(Long id) {
+	    Module module = moduleRepo.findById(id)
+	        .orElseThrow(() -> new RuntimeException("Module not found"));
+
+	    return new ModuleDto(
+	        module.getId(),
+	        module.getTitle(),
+	        module.getDescription(),
+	        module.getTheoryHours(),
+	        module.getPracticalHours(),
+	        module.getModuleRouterId(),
+	        module.getSubjects().stream()
+	            .map(Subject::getId)
+	            .collect(Collectors.toSet())
+	    );
+	}
+
     
 }
 
