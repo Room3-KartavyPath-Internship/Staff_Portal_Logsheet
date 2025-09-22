@@ -1,88 +1,72 @@
-// src/pages/auth/Login.jsx
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../contexts/AuthContext";
 import { login } from "../../services/authApi";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./Auth.css";
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  });
-  const [loading, setLoading] = useState(false);
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      await login(formData);
-      toast.success("Login successful!");
-      setTimeout(() => {
-        navigate("/");
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      toast.error(error.response?.data || "Invalid email or password");
-    } finally {
-      setLoading(false);
-    }
-  };
+  e.preventDefault();
+  const credentials = { email, password };
 
-  return (
-    <div className="auth-container">
-      <div className="auth-form">
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-          
-          <button type="submit" disabled={loading} className="btn-primary">
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-        
-        <div className="auth-links">
-          <Link to="/forgot-password">Forgot Password?</Link>
-          <div>
-            Don't have an account? <Link to="/register">Register</Link>
-          </div>
-        </div>
-      </div>
-      <ToastContainer position="top-right" autoClose={3000} />
-    </div>
-  );
+  try {
+    const res = await login(credentials);
+    console.log(res.data);
+
+    if (res.data && res.data.id) {
+      setUser(res.data); // save user in context
+      toast.success("Login successful!");
+      navigate("/dashboard");
+    } else {
+      toast.error("Login failed");
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("Something went wrong!");
+  }
 };
 
-export default Login;
+
+  return (
+    <div className="container mt-5" style={{ maxWidth: "500px" }}>
+      <h3 className="text-center mb-4">Login</h3>
+      <form onSubmit={handleSubmit} className="card card-body">
+        <div className="mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-primary w-100">
+          Login
+        </button>
+
+        <div className="mt-3 text-center">
+          <Link to="/register">Register</Link> |{" "}
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
+      </form>
+    </div>
+  );
+}

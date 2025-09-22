@@ -15,6 +15,7 @@ import com.sunbeam.logsheet.service.RoleService;
 
 @RestController
 @RequestMapping("/api/roles")
+
 public class RoleController {
 
     @Autowired

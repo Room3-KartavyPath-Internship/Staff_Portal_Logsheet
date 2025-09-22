@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/course-types")
-@CrossOrigin("*")
+
 public class CourseTypeController {
 
     @Autowired

@@ -1,92 +1,75 @@
-// src/App.jsx
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-// Components
+import { Routes, Route } from "react-router-dom"; // no BrowserRouter here
+import { SubjectsProvider } from "./contexts/SubjectsContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
-
-// Auth Pages
+import SubjectPage from "./pages/SubjectPage";
+import SectionPage from "./pages/SectionPage";
+import StaffList from "./pages/StaffList";
+import StaffForm from "./pages/StaffForm";
+import CourseList from "./pages/CourseList";
+import CourseForm from "./pages/CourseForm";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import Unauthorized from "./pages/Unauthorized";
+import PrivateRoute from "./routes/PrivateRoute";
+import Dashboard from "./pages/Dashboard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-// Auth utilities
-import { isAuthenticated } from "./services/authApi";
-
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-  return isAuthenticated() ? children : <Navigate to="/login" replace />;
-};
-
-// Public Route Component
-const PublicRoute = ({ children }) => {
-  return !isAuthenticated() ? children : <Navigate to="/" replace />;
-};
-
-// Home Component
-const Home = () => {
+function App() {
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>Welcome to Logsheet Management</h1>
-      
-    </div>
-  );
-};
-
-const App = () => {
-  return (
-    <Router>
-      <div className="App">
+    <AuthProvider>
+      <SubjectsProvider>
         <Navbar />
-        
-        <Routes>
-          {/* Public Routes */}
-          <Route 
-            path="/login" 
-            element={<PublicRoute><Login /></PublicRoute>} 
-          />
-          <Route 
-            path="/register" 
-            element={<PublicRoute><Register /></PublicRoute>} 
-          />
-          <Route 
-            path="/forgot-password" 
-            element={<PublicRoute><ForgotPassword /></PublicRoute>} 
-          />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          
-          {/* Protected Routes */}
-          <Route 
-            path="/" 
-            element={<ProtectedRoute><Home /></ProtectedRoute>} 
-          />
-          
-          {/* Future routes */}
-          <Route 
-            path="/add-log" 
-            element={<ProtectedRoute><div style={{padding: "20px"}}>Add Log Page - Coming Soon</div></ProtectedRoute>} 
-          />
-          
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        
-        <ToastContainer 
+        <div className="container">
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+
+            {/* Protected routes */}
+            <Route element={<PrivateRoute requiredPath="/dashboard" />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+
+            <Route element={<PrivateRoute requiredPath="/" />}>
+              <Route path="/subjects" element={<SubjectPage />} />
+            </Route>
+
+            <Route element={<PrivateRoute requiredPath="/sections" />}>
+              <Route path="/sections" element={<SectionPage />} />
+            </Route>
+
+            <Route element={<PrivateRoute requiredPath="/staffs" />}>
+              <Route path="/staffs" element={<StaffList />} />
+              <Route path="/add-staff" element={<StaffForm />} />
+              <Route path="/edit-staff/:id" element={<StaffForm />} />
+            </Route>
+
+            <Route element={<PrivateRoute requiredPath="/courses" />}>
+              <Route path="/courses" element={<CourseList />} />
+              <Route path="/courses/add" element={<CourseForm />} />
+              <Route path="/courses/edit/:id" element={<CourseForm />} />
+            </Route>
+          </Routes>
+        </div>
+
+        <ToastContainer
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
-          newestOnTop={false}
+          newestOnTop
           closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
           pauseOnHover
         />
-      </div>
-    </Router>
+      </SubjectsProvider>
+    </AuthProvider>
   );
-};
+}
 
 export default App;

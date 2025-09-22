@@ -1,10 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-// import "./pages/form.css";
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import { BrowserRouter } from 'react-router-dom'
+
+
+
+createRoot(document.getElementById('root')).render(
+<BrowserRouter>
     <App />
-  </React.StrictMode>
-);
+</BrowserRouter>
+)
