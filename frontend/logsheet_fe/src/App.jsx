@@ -19,6 +19,8 @@ import Dashboard from "./pages/Dashboard";
 import BatchCycleList from "./pages/BatchCycle/BatchCycleList";
 import AddBatchCycle from "./pages/BatchCycle/AddBatchCycle"; 
 import EditBatchCycle from "./pages/BatchCycle/EditBatchCycle";
+import TopicList from "./pages/Topic/TopicList";
+import AddTopic from "./pages/Topic/AddTopic";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -63,8 +65,15 @@ function App() {
 
             <Route element={<PrivateRoute requiredPath="/batch-cycles" />}>
               <Route path="/batch-cycles" element={<BatchCycleList />} />
-      <Route path="/batch-cycles/add" element={<AddBatchCycle />} />
-      <Route path="/batch-cycles/edit/:id" element={<EditBatchCycle />} />
+             <Route path="/batch-cycles/add" element={<AddBatchCycle />} />
+             <Route path="/batch-cycles/edit/:id" element={<EditBatchCycle />} />
+            </Route>
+
+            
+            <Route element={<PrivateRoute requiredPath="/topics-list" />}>
+             <Route path="/topics-list" element={<TopicList />} />
+            <Route path="/topics/add" element={<AddTopic />} />
+            <Route path="/topics/edit/:id" element={<AddTopic />} />
             </Route>
           </Routes>
         </div>
