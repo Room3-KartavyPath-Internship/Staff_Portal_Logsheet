@@ -28,22 +28,7 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private RoleRepository roleRepository;
 
-//    @Override
-//    public ApiResponse addStaff(StaffRequest request) {
-//        if (staffRepository.existsByEmail(request.getEmail())) {
-//            return new ApiResponse("Email already exists", false);
-//        }
-//
-//        Role role = roleRepository.findById(request.getRoleId())
-//                .orElseThrow(() -> new RuntimeException("Invalid Role Id"));
-//
-//        Staff staff = new Staff();
-//        mapRequestToEntity(request, staff);
-//        staff.setRole(role);
-//
-//        staffRepository.save(staff);
-//        return new ApiResponse("Staff added successfully", true);
-//    }
+
     
     @Override
     public ApiResponse addStaff(StaffRequest request) {
@@ -125,13 +110,7 @@ public class StaffServiceImpl implements StaffService {
                 .collect(Collectors.toList());
     }
 
-//    private void mapRequestToEntity(StaffRequest request, Staff staff) {
-//        staff.setFirstName(request.getFirstName());
-//        staff.setLastName(request.getLastName());
-//        staff.setEmail(request.getEmail());
-//        staff.setMobile(request.getMobile());
-//        staff.setStaffType(request.getStaffType());
-//    }
+
 
     private StaffResponse mapEntityToResponse(Staff staff) {
         StaffResponse response = new StaffResponse();
@@ -146,9 +125,5 @@ public class StaffServiceImpl implements StaffService {
 
 	
 
-//	@Override
-//	public ApiResponse updateStaff(Long id, StaffRequest request) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface StaffService {
     ApiResponse addStaff(StaffRequest staffRequest);
     List<StaffResponse> getAllStaff();
-	//ApiResponse updateStaff(Long id, StaffRequest request);
+	
 	ApiResponse deleteStaff(Long id);
 	StaffResponse getStaffById(Long id);
 	ApiResponse updateStaff(Long id, StaffUpdateRequest request);
