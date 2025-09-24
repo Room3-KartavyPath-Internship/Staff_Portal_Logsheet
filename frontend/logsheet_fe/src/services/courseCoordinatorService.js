@@ -21,3 +21,13 @@ export const updateCoordinator = (id, coordinator) =>
 // Delete coordinator
 export const deleteCoordinator = (id) =>
   axios.delete(`${API_URL}/delete/${id}`);
+
+export const getAllCourses= async()=>{
+  const res = await axios.get(`${config.serverBaseUrl}/api/courses`);
+  return res.data;
+}
+
+export const getAllStaff= async()=>{
+  const res = await axios.get(`${config.serverBaseUrl}/api/staff/all`);
+  return res.data;
+}

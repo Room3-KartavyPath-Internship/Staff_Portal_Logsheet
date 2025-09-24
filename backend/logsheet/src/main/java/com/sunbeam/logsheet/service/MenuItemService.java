@@ -17,4 +17,7 @@ public interface MenuItemService {
     List<MenuItemResponseDTO> getAllMenuItems();
 
     MenuItemResponseDTO getMenuItemById(Long id);
+    
+    List<MenuItemResponseDTO> getMenusByRole(String roleTitle);
+
 }

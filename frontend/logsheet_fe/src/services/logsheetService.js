@@ -42,7 +42,7 @@ export const getAllCourses = async () => {
 };
 
 
-const MODULE_API = `${BASE_URL}/api/modules/modules`;
+const MODULE_API = `${BASE_URL}/api/modules/module`;
 
 export const getAllModules = async () => {
   const res = await axios.get(MODULE_API);

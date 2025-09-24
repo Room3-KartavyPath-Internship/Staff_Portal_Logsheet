@@ -1,72 +1,112 @@
-
 // src/components/CourseProgressReport.jsx
-import React, { useState } from "react";
-import { getCourseProgressReport } from "../services/courseProgressReportService";
-import { Button, Form, Table, Spinner } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { getCourseProgressReport, getAllCourses } from "../services/courseProgressReportService";
+import { Button, Table, Spinner } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
+import { useParams, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const CourseProgressReport = () => {
-  const [courseName, setCourseName] = useState("");
+  const { courseName: paramCourseName } = useParams(); // from URL
+  const navigate = useNavigate(); // for programmatic navigation
+  const [courseName, setCourseName] = useState(paramCourseName || "");
+  const [courses, setCourses] = useState([]);
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleFetchReport = async (e) => {
-    e.preventDefault();
-    if (!courseName.trim()) {
-      toast.warning("Please enter a course name");
-      return;
+  // fetch all courses for dropdown
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await getAllCourses();
+        setCourses(res.data || []); // service already returns res.data
+      } catch (err) {
+        toast.error("Failed to load courses");
+      }
+    };
+    fetchCourses();
+  }, []);
+
+  // auto-fetch if courseName present in URL
+  useEffect(() => {
+    if (paramCourseName) {
+      fetchReport(paramCourseName);
     }
+  }, [paramCourseName]);
+
+  const fetchReport = async (name) => {
     setLoading(true);
     try {
-      const res = await getCourseProgressReport(courseName);
-      if (res.data.success) {
+      const res = await getCourseProgressReport(name);
+      if (res.data?.success) {
         setReports(res.data.data || []);
         toast.success(res.data.message || "Report fetched successfully");
       } else {
-        toast.error(res.data.message || "Failed to fetch report");
+        setReports([]);
+        toast.error(res.data?.message || "Failed to fetch report");
       }
     } catch (err) {
+      setReports([]);
       toast.error("Error fetching report");
     } finally {
       setLoading(false);
     }
   };
 
+  // handle form submission
+  const handleFetchReport = (e) => {
+    e.preventDefault();
+    if (!courseName.trim()) {
+      toast.warning("Please select a course");
+      return;
+    }
+    // navigate to URL with selected courseName
+    navigate(`/reports/course-progress/${courseName}`);
+  };
+
   return (
     <div className="container mt-4">
       <h2 className="mb-3 text-center">📊 Course Progress Report</h2>
 
-      {/* Search Form */}
-      <Form className="d-flex justify-content-center mb-4" onSubmit={handleFetchReport}>
-        <Form.Control
-          type="text"
-          placeholder="Enter Course Name"
+      {/* Dropdown Search Form */}
+      <form
+        className="d-flex justify-content-center mb-4"
+        onSubmit={handleFetchReport}
+      >
+        <select
+          className="form-select me-2"
+          style={{ maxWidth: "300px" }}
           value={courseName}
           onChange={(e) => setCourseName(e.target.value)}
-          style={{ maxWidth: "300px" }}
-          className="me-2"
-        />
-        <Button type="submit" variant="btn btn-success" disabled={loading}>
+        >
+          <option value="">-- Select Course --</option>
+          {courses.map((course, idx) => (
+            <option key={idx} value={course.name}>
+              {course.name}
+            </option>
+          ))}
+        </select>
+
+        <Button type="submit" variant="success" disabled={loading}>
           {loading ? <Spinner animation="border" size="sm" /> : "Generate"}
         </Button>
-      </Form>
+      </form>
 
-      {/* Results Table */}
-      {reports.length > 0 && (
+      {/* Report Table */}
+      {reports.length > 0 ? (
         <Table striped bordered hover responsive className="shadow-sm">
           <thead className="table-dark">
             <tr>
               <th>#</th>
-              <th style={{ width: "200px" }}>Course Name</th>
-              <th style={{ width: "200px" }}>Module Title</th>
-              <th style={{ width: "200px" }}>Course Start Date</th>
-              <th style={{ width: "200px" }}>Course End Date</th>
-              <th style={{ width: "200px" }}>Theory Hours</th>
-              <th style={{ width: "200px" }}>Practical Hours</th>
-              <th style={{ width: "200px" }}>Total Hours</th>
-              <th style={{ width: "200px" }}>Faculty Name</th>
+              <th>Course Name</th>
+              <th>Module Title</th>
+              <th>Course Start Date</th>
+              <th>Course End Date</th>
+              <th>Theory Hours</th>
+              <th>Practical Hours</th>
+              <th>Total Hours</th>
+              <th>Faculty Name</th>
             </tr>
           </thead>
           <tbody>
@@ -85,12 +125,12 @@ const CourseProgressReport = () => {
             ))}
           </tbody>
         </Table>
-      )}
-
-      {reports.length === 0 && !loading && (
-        <p className="text-muted text-center">
-          No reports found. Please search by course name.
-        </p>
+      ) : (
+        !loading && (
+          <p className="text-muted text-center">
+            No reports found. Please select a course and generate report.
+          </p>
+        )
       )}
 
       <ToastContainer position="top-right" />

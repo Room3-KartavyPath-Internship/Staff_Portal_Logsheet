@@ -14,7 +14,10 @@ import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.DTO.MenuItemRequestDTO;
 import com.sunbeam.logsheet.DTO.MenuItemResponseDTO;
 import com.sunbeam.logsheet.entity.MenuItem;
+import com.sunbeam.logsheet.entity.Role;
+import com.sunbeam.logsheet.entity.RoleMenuPermission;
 import com.sunbeam.logsheet.repository.MenuItemRepository;
+import com.sunbeam.logsheet.repository.RoleRepository;
 
 @Transactional
 @Service
@@ -22,6 +25,9 @@ public class MenuItemServiceImpl implements MenuItemService {
 
     @Autowired
     private MenuItemRepository menuItemRepository;
+    
+    @Autowired
+    private RoleRepository roleRepository; 
 
     @Autowired
     private ModelMapper modelMapper;
@@ -69,4 +75,19 @@ public class MenuItemServiceImpl implements MenuItemService {
         menuItemRepository.delete(existing);
         return new ApiResponse<>("Menu item deleted successfully", true);
     }
+
+	@Override
+	public List<MenuItemResponseDTO> getMenusByRole(String roleTitle) {
+		 // Find Role by title
+	    Role role = roleRepository.findByTitle(roleTitle)
+	                .stream()
+	                .findFirst()
+	                .orElseThrow(() -> new EntityNotFoundException("Role not found"));
+
+	    // Filter menu items based on allowed permissions
+	    return role.getMenuPermissions().stream()
+	            .filter(RoleMenuPermission::isAllowed)
+	            .map(p -> modelMapper.map(p.getMenuItem(), MenuItemResponseDTO.class))
+	            .collect(Collectors.toList());
+	}
 }

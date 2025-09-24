@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.sunbeam.logsheet.DTO.ApiResponse;
 import com.sunbeam.logsheet.DTO.MenuItemRequestDTO;
 import com.sunbeam.logsheet.DTO.MenuItemResponseDTO;
+import com.sunbeam.logsheet.entity.User;
 import com.sunbeam.logsheet.service.MenuItemService;
 
 @RestController
@@ -47,4 +48,22 @@ public class MenuItemController {
     public ResponseEntity<ApiResponse<?>> deleteMenuItem(@PathVariable Long id) {
         return ResponseEntity.ok(menuItemService.deleteMenuItem(id));
     }
+    
+    
+    
+    @GetMapping("/for-user")
+    public ResponseEntity<ApiResponse<List<MenuItemResponseDTO>>> getMenusForUser(
+            @RequestAttribute("user") User user
+    ) {
+        List<MenuItemResponseDTO> menus;
+
+        if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+            menus = menuItemService.getAllMenuItems(); // Admin sees all
+        } else {
+            menus = menuItemService.getMenusByRole(user.getRole()); // Staff/CoCo sees allowed
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>("Menus fetched", true, menus));
+    }
+
 }

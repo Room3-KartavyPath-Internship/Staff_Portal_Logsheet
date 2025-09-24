@@ -69,59 +69,95 @@ public class CourseModuleController {
     
     @PostMapping("/topic")
     public ResponseEntity<ApiResponse<?>> addTopic(@RequestBody TopicDto dto) {
-        service.addTopic(dto);
-        return ResponseEntity.ok(new ApiResponse<>("Topic added successfully", true));
+        ApiResponse<?> response = service.addTopic(dto);
+        return ResponseEntity.ok(response); // ✅ message included
     }
 
     @GetMapping("/topics")
     public ResponseEntity<List<TopicDto>> getTopics() {
         return ResponseEntity.ok(service.getAllTopics());
     }
+    
+    @GetMapping("/topic/{id}")
+    public ResponseEntity<TopicDto> getTopicById(@PathVariable Long id) {
+        TopicDto dto = service.getTopicById(id);  // Call service method
+        return ResponseEntity.ok(dto);
+    }
+
 
     @PutMapping("/topic/{id}")
     public ResponseEntity<ApiResponse<?>> updateTopic(@PathVariable Long id, @RequestBody TopicDto dto) {
-        service.updateTopic(id, dto);
-        return ResponseEntity.ok(new ApiResponse<>("Topic updated successfully", true));
+        ApiResponse<?> response = service.updateTopic(id, dto);
+        return ResponseEntity.ok(response); // ✅ message included
     }
 
     @DeleteMapping("/topic/{id}")
     public ResponseEntity<ApiResponse<?>> deleteTopic(@PathVariable Long id) {
-        service.deleteTopic(id);
-        return ResponseEntity.ok(new ApiResponse<>("Topic deleted successfully", true));
+        ApiResponse<?> response = service.deleteTopic(id);
+        return ResponseEntity.ok(response); // ✅ message included
     }
-    
-    @PostMapping("/module")
-    public ResponseEntity<ApiResponse<?>> addModule(@RequestBody ModuleDto dto) {
-        service.addModule(dto);
-        return ResponseEntity.ok(new ApiResponse<>("Module added successfully",true));
-    }
+//    
+//    @PostMapping("/module")
+//    public ResponseEntity<ApiResponse<?>> addModule(@RequestBody ModuleDto dto) {
+//        service.addModule(dto);
+//        return ResponseEntity.ok(new ApiResponse<>("Module added successfully",true));
+//    }
+//
+//    
+//    @GetMapping("/modules")
+//    public ResponseEntity<ApiResponse<List<ModuleDto>>> getModules() {
+//        return ResponseEntity.ok(new ApiResponse<>("Fetched successfully", true ,service.getAllModules()));
+//    }
+//
+//  
+//
+//    @PutMapping("/module/{id}")
+//    public ResponseEntity<ApiResponse<?>> updateModule(@PathVariable Long id, @RequestBody ModuleDto dto) {
+//        service.updateModule(id, dto);
+//        return ResponseEntity.ok(new ApiResponse<>("Module updated successfully", true));
+//    }
+//
+//    @DeleteMapping("/module/{id}")
+//    public ResponseEntity<ApiResponse<?>> deleteModule(@PathVariable Long id) {
+//        service.deleteModule(id);
+//        return ResponseEntity.ok(new ApiResponse<>("Module deleted successfully",true));
+//    }
+//    
+//    @GetMapping("/module/{id}")
+//    public ResponseEntity<ApiResponse<ModuleDto>> getModuleById(@PathVariable Long id) {
+//        ModuleDto dto = service.getModuleById(id);
+//        return ResponseEntity.ok(new ApiResponse<>("Fetched successfully", true, dto));
+//    }
 
     
-    @GetMapping("/modules")
-    public ResponseEntity<ApiResponse<List<ModuleDto>>> getModules() {
-        return ResponseEntity.ok(new ApiResponse<>("Fetched successfully", true ,service.getAllModules()));
-    }
-
+ 
   
 
-    @PutMapping("/module/{id}")
-    public ResponseEntity<ApiResponse<?>> updateModule(@PathVariable Long id, @RequestBody ModuleDto dto) {
-        service.updateModule(id, dto);
-        return ResponseEntity.ok(new ApiResponse<>("Module updated successfully", true));
+    @PostMapping("/module")
+    public ResponseEntity<ApiResponse<?>> addModule(@RequestBody ModuleDto dto) {
+        return ResponseEntity.ok(service.addModule(dto));
     }
 
-    @DeleteMapping("/module/{id}")
-    public ResponseEntity<ApiResponse<?>> deleteModule(@PathVariable Long id) {
-        service.deleteModule(id);
-        return ResponseEntity.ok(new ApiResponse<>("Module deleted successfully",true));
+    @GetMapping("/module")
+    public ResponseEntity<ApiResponse<List<ModuleDto>>> getModules() {
+        return ResponseEntity.ok(new ApiResponse<>("Fetched successfully", true, service.getAllModules()));
     }
-    
+
     @GetMapping("/module/{id}")
     public ResponseEntity<ApiResponse<ModuleDto>> getModuleById(@PathVariable Long id) {
         ModuleDto dto = service.getModuleById(id);
         return ResponseEntity.ok(new ApiResponse<>("Fetched successfully", true, dto));
     }
 
+    @PutMapping("/module/{id}")
+    public ResponseEntity<ApiResponse<?>> updateModule(@PathVariable Long id, @RequestBody ModuleDto dto) {
+        return ResponseEntity.ok(service.updateModule(id, dto));
+    }
+
+    @DeleteMapping("/module/{id}")
+    public ResponseEntity<ApiResponse<?>> deleteModule(@PathVariable Long id) {
+        return ResponseEntity.ok(service.deleteModule(id));
+    }
 
 
 }

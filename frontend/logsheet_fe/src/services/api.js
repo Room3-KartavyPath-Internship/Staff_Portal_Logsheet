@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080", // update if your backend runs on another port
+  baseURL: "http://localhost:8080", 
+  // update if your backend runs on another port
 });
 
 // Login API

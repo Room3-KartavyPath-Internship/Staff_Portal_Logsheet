@@ -6,6 +6,8 @@ import {
   addCoordinator,
   updateCoordinator,
   deleteCoordinator,
+  getAllCourses,
+  getAllStaff,
 } from "../services/courseCoordinatorService";
 import { Modal, Button, Table, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -14,6 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const CourseCoordinator = () => {
   const [coordinators, setCoordinators] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [staff, setStaff] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingCoordinator, setEditingCoordinator] = useState(null);
   const [formData, setFormData] = useState({
@@ -21,18 +25,38 @@ const CourseCoordinator = () => {
     staffId: "",
   });
 
-  // Fetch coordinators on load
+  // Fetch coordinators, courses, staff
   const fetchCoordinators = async () => {
     try {
       const res = await getAllCoordinators();
-      setCoordinators(res.data);
+      setCoordinators(res.data || []);
     } catch (err) {
       toast.error("Failed to fetch coordinators");
     }
   };
 
+  const fetchCourses = async () => {
+    try {
+      const res = await getAllCourses();
+      setCourses(res.data || []);
+    } catch (err) {
+      toast.error("Failed to fetch courses");
+    }
+  };
+
+  const fetchStaff = async () => {
+    try {
+      const res = await getAllStaff();
+      setStaff(res || []);
+    } catch (err) {
+      toast.error("Failed to fetch staff");
+    }
+  };
+
   useEffect(() => {
     fetchCoordinators();
+    fetchCourses();
+    fetchStaff();
   }, []);
 
   // Handle input changes
@@ -91,14 +115,22 @@ const CourseCoordinator = () => {
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Course Coordinators</h2>
-      <Button onClick={() => setShowModal(true)}>Add Coordinator</Button>
+      <Button
+        onClick={() => {
+          setFormData({ courseId: "", staffId: "" });
+          setEditingCoordinator(null);
+          setShowModal(true);
+        }}
+      >
+        Add Coordinator
+      </Button>
 
       <Table striped bordered hover className="mt-3">
         <thead>
           <tr>
-            <th style={{ width: "200px" }}>ID</th>
-            <th style={{ width: "200px" }}>Course</th>
-            <th style={{ width: "200px" }}>Staff</th>
+            <th style={{ width: "100px" }}>ID</th>
+            <th style={{ width: "250px" }}>Course</th>
+            <th style={{ width: "250px" }}>Staff</th>
             <th style={{ width: "200px" }}>Actions</th>
           </tr>
         </thead>
@@ -139,26 +171,42 @@ const CourseCoordinator = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
+            {/* Course Dropdown */}
             <Form.Group className="mb-3">
-              <Form.Label>Course ID</Form.Label>
-              <Form.Control
-                type="number"
+              <Form.Label>Course</Form.Label>
+              <Form.Select
                 name="courseId"
                 value={formData.courseId}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="">-- Select Course --</option>
+                {courses.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
+
+            {/* Staff Dropdown */}
             <Form.Group className="mb-3">
-              <Form.Label>Staff ID</Form.Label>
-              <Form.Control
-                type="number"
+              <Form.Label>Staff</Form.Label>
+              <Form.Select
                 name="staffId"
                 value={formData.staffId}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="">-- Select Staff --</option>
+                {staff.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.fullName}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
+
             <Button variant="primary" type="submit">
               {editingCoordinator ? "Update" : "Save"}
             </Button>
