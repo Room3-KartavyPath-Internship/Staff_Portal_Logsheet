@@ -77,8 +77,8 @@ export default function Navbar() {
       title: "Course Management",
       subMenu: [
         { title: "Add Batch Cycle", path: "/batch-cycles" },
-        { title: "Add Premises", path: "/premises" },
-        { title: "Add Course Types", path: "/course-types" },
+        { title: "Add Premises", path: "api/premises" },
+        { title: "Add Course Types", path: "api/course-types" },
         { title: "Add Course", path: "/courses" },
       ],
     },
@@ -94,21 +94,21 @@ export default function Navbar() {
     {
       title: "Course Group Management",
       subMenu: [
-        { title: "Add Group", path: "/groups" },
-        { title: "Add Course Group", path: "/course-groups" },
+        { title: "Add Group", path: "/groups" }
+        // { title: "Add Course Group", path: "/course-groups" },
       ],
     },
     {
       title: "Report Management",
       subMenu: [
-        { title: "Module Progress Report", path: "/module-report" },
-        { title: "Course Progress Report", path: "/course-report" },
+        // { title: "Module Progress Report", path: "/module-report" },
+        { title: "Course Progress Report", path: "/reports/course-progress/:courseName" },
       ],
     },
     {
       title: "User Management",
       subMenu: [
-        { title: "Add Menu Items", path: "/menu-items" },
+        // { title: "Add Menu Items", path: "/menu-items" },
         { title: "Add Role", path: "/roles" },
         { title: "Add Staff", path: "/staffs" },
       ],
@@ -116,14 +116,14 @@ export default function Navbar() {
     {
       title: "Course Administration",
       subMenu: [
-        { title: "Assign Course-Coordinator", path: "/assign-coco" },
+        { title: "Assign Course-Coordinator", path: "/course-coordinator" },
       ],
     },
     {
       title: "LogSheet Management",
       subMenu: [
         { title: "Add Log Sheet Types", path: "/logsheet-types" },
-        { title: "Add Log", path: "/add-log" },
+        { title: "Add Log", path: "/logsheets" },
         { title: "Verify Logs", path: "/verify-logs" },
         { title: "Approve Logs", path: "/approve-logs" },
       ],

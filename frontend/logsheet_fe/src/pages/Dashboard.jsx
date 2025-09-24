@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   return (
     <div className="container mt-5 text-center">
-      <h2>Welcome {user?.fullName || "Guest"} 👋</h2>
+      <h2> {user?.fullName || "Guest"} </h2>
       <p>Redirecting you to your dashboard...</p>
     </div>
   );

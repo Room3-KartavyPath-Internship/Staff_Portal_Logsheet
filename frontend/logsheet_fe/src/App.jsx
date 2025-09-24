@@ -15,12 +15,25 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./routes/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
-import Dashboard from "./pages/Dashboard";
+
+
 import BatchCycleList from "./pages/BatchCycle/BatchCycleList";
 import AddBatchCycle from "./pages/BatchCycle/AddBatchCycle"; 
 import EditBatchCycle from "./pages/BatchCycle/EditBatchCycle";
+import Premises from "./pages/Premises";
+import CourseType from "./pages/CourseType"
 import TopicList from "./pages/Topic/TopicList";
 import AddTopic from "./pages/Topic/AddTopic";
+import Modules from "./pages/Modules";
+import GroupMaster from "./pages/GroupMaster";
+import CourseProgressReport from "./pages/CourseProgressReport";
+import CourseCoordinator from "./pages/CourseCoordinator";
+import LogsheetType from "./pages/LogsheetTypePage";
+import Logsheet from "./pages/Logsheet";
+
+
+
+import RolePermissions from "./pages/RolePermissions";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -43,6 +56,61 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
 
+
+            <Route element={<PrivateRoute requiredPath="/batch-cycles" />}>
+              <Route path="/batch-cycles" element={<BatchCycleList />} />
+             <Route path="/batch-cycles/add" element={<AddBatchCycle />} />
+             <Route path="/batch-cycles/edit/:id" element={<EditBatchCycle />} />
+            </Route>
+
+            
+             <Route element={<PrivateRoute requiredPath="api/premises" />}>
+              <Route path="api/premises" element={<Premises />} />
+             </Route> 
+
+             
+             <Route element={<PrivateRoute requiredPath="api/course-types" />}>
+              <Route path="api/course-types" element={<CourseType />} />
+             </Route> 
+
+              <Route element={<PrivateRoute requiredPath="/modules" />}>
+              <Route path="/modules" element={<Modules />} />
+             </Route> 
+
+
+             
+              <Route element={<PrivateRoute requiredPath="/groups" />}>
+              <Route path="/groups" element={<GroupMaster />} />
+             </Route>
+
+
+              <Route element={<PrivateRoute requiredPath="/reports/course-progress/:courseName" />}>
+              <Route path="/reports/course-progress/:courseName" element={<CourseProgressReport />} />
+             </Route>  
+             
+
+             
+              <Route element={<PrivateRoute requiredPath="/course-coordinator" />}>
+              <Route path="/course-coordinator" element={<CourseCoordinator />} />
+             </Route> 
+
+
+             
+              <Route element={<PrivateRoute requiredPath="/logsheet-types" />}>
+              <Route path="/logsheet-types" element={<LogsheetType />} />
+             </Route>
+
+
+             
+              <Route element={<PrivateRoute requiredPath="/logsheets" />}>
+              <Route path="/logsheets" element={<Logsheet />} />
+             </Route>
+
+
+            
+           
+
+
             <Route element={<PrivateRoute requiredPath="/" />}>
               <Route path="/subjects" element={<SubjectPage />} />
             </Route>
@@ -63,17 +131,17 @@ function App() {
               <Route path="/courses/edit/:id" element={<CourseForm />} />
             </Route>
 
-            <Route element={<PrivateRoute requiredPath="/batch-cycles" />}>
-              <Route path="/batch-cycles" element={<BatchCycleList />} />
-             <Route path="/batch-cycles/add" element={<AddBatchCycle />} />
-             <Route path="/batch-cycles/edit/:id" element={<EditBatchCycle />} />
-            </Route>
-
             
-            <Route element={<PrivateRoute requiredPath="/topics-list" />}>
-             <Route path="/topics-list" element={<TopicList />} />
+            
+            <Route element={<PrivateRoute requiredPath="/topics" />}>
+             <Route path="/topics" element={<TopicList />} />
             <Route path="/topics/add" element={<AddTopic />} />
             <Route path="/topics/edit/:id" element={<AddTopic />} />
+            </Route>
+
+
+            <Route element={<PrivateRoute requiredPath="/roles" />}>
+            <Route path="/roles" element={<RolePermissions />} />
             </Route>
           </Routes>
         </div>

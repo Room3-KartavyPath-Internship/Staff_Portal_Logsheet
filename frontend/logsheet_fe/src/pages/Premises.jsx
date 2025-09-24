@@ -64,7 +64,7 @@ function Premises() {
       const res = await deletePremises(id);
       if (res.data.success) {
         toast.success(res.data.message);
-        setPremises((prev) => prev.filter((p) => p.id !== id)); // ✅ immediate update
+        setPremises((prev) => prev.filter((p) => p.id !== id)); // 
       } else {
         toast.error(res.data.message);
       }
