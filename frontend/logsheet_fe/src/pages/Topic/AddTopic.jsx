@@ -13,11 +13,11 @@ export default function AddTopic() {
   const { id } = useParams(); // id for edit mode
   const [topicData, setTopicData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sections, setSections] = useState([]); // ✅ store available sections
+  const [sections, setSections] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ✅ fetch sections for dropdown
+    
     const fetchSections = async () => {
       try {
         const res = await getSections();
@@ -29,7 +29,7 @@ export default function AddTopic() {
     };
     fetchSections();
 
-    // ✅ fetch topic if editing
+    
     if (id) {
       axios
         .get(`http://localhost:8080/api/modules/topic/${id}`)
@@ -67,7 +67,7 @@ export default function AddTopic() {
       <TopicForm
         key={id || "new"}
         initialData={topicData}
-        sections={sections} // ✅ pass sections to form
+        sections={sections} // 
         onSubmit={handleSubmit}
       />
     </div>
