@@ -1,8 +1,11 @@
+// 
+
+
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../contexts/AuthContext";
-import { login } from "../../services/authApi";
+import { login, adminLogin } from "../../services/authApi";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,26 +14,40 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const credentials = { email, password };
+    e.preventDefault();
+    const credentials = { email, password };
 
-  try {
-    const res = await login(credentials);
-    console.log(res.data);
+    try {
+      let res;
 
-    if (res.data && res.data.id) {
-      setUser(res.data); // save user in context
-      toast.success("Login successful!");
-      navigate("/dashboard");
-    } else {
-      toast.error("Login failed");
+      // ✅ Hardcoded admin login
+      if (email === "admin@system.com") {
+        res = await adminLogin(credentials); // call admin login endpoint
+      } else {
+        // Staff/Co-Co login
+        res = await login(credentials);
+      }
+
+      if (res.data && res.data.id !== undefined) {
+        setUser(res.data); // Save user in context
+        toast.success("Login successful!");
+
+        // 🔹 Redirect logic
+        if (res.data.role === "Admin") {
+          navigate("/dashboard"); // Admin goes directly to dashboard
+        } else {
+          const firstMenu = res.data.menus && res.data.menus[0]?.path;
+          navigate(firstMenu || "/dashboard");
+        }
+      } else {
+        toast.error("Login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      const msg = err.response?.data?.message || "Something went wrong!";
+      toast.error(msg);
     }
-  } catch (err) {
-    console.error(err);
-    toast.error("Something went wrong!");
-  }
-};
-
+  };
 
   return (
     <div className="container mt-5" style={{ maxWidth: "500px" }}>
@@ -70,3 +87,4 @@ export default function Login() {
     </div>
   );
 }
+//LOGIN.JSX

@@ -30,6 +30,8 @@ import CourseProgressReport from "./pages/CourseProgressReport";
 import CourseCoordinator from "./pages/CourseCoordinator";
 import LogsheetType from "./pages/LogsheetTypePage";
 import Logsheet from "./pages/Logsheet";
+import VerifyLogsheet from "./pages/VerifyLogsheet";
+import ApproveLogsheet from "./pages/ApproveLogsheet"
 
 
 
@@ -101,10 +103,17 @@ function App() {
              </Route>
 
 
-             
+{/*              
               <Route element={<PrivateRoute requiredPath="/logsheets" />}>
               <Route path="/logsheets" element={<Logsheet />} />
+             </Route> */}
+
+             <Route element={<PrivateRoute requiredPath="/logsheets" />}>
+              <Route path="/logsheets" element={<Logsheet />} />
+              <Route path="/logsheets/verify" element={<VerifyLogsheet />} />
+              <Route path="/logsheets/approve" element={<ApproveLogsheet />} />
              </Route>
+
 
 
             
