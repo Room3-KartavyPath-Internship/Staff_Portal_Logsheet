@@ -16,6 +16,16 @@ export default function AddTopic() {
   const [sections, setSections] = useState([]);
   const navigate = useNavigate();
 
+  const getAuthHeader = () => {
+      const user = JSON.parse(sessionStorage.getItem("user")); 
+      if (user && user.token) {
+        return {
+          Authorization: `Bearer ${user.token}`,
+        };
+      }
+      return {};
+    };
+
   useEffect(() => {
     
     const fetchSections = async () => {
@@ -32,7 +42,7 @@ export default function AddTopic() {
     
     if (id) {
       axios
-        .get(`http://localhost:8080/api/modules/topic/${id}`)
+        .get(`http://localhost:8080/api/modules/topic/${id}`,{ headers: getAuthHeader() })
         .then((res) => setTopicData(res.data))
         .catch((err) => {
           toast.error("Failed to fetch topic!");
@@ -48,9 +58,9 @@ export default function AddTopic() {
     try {
       let res;
       if (id) {
-        res = await axios.put(`http://localhost:8080/api/modules/topic/${id}`, data);
+        res = await axios.put(`http://localhost:8080/api/modules/topic/${id}`, data,{ headers: getAuthHeader() });
       } else {
-        res = await axios.post("http://localhost:8080/api/modules/topic", data);
+        res = await axios.post("http://localhost:8080/api/modules/topic", data,{ headers: getAuthHeader() });
       }
       toast.success(res.data?.message || "Saved successfully!");
       navigate("/topics");

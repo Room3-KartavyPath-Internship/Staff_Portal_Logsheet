@@ -7,13 +7,13 @@ function ApproveLogsheet() {
   const [logsheets, setLogsheets] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const user = JSON.parse(sessionStorage.getItem("user")); 
+
   const fetchLogsheets = async () => {
     setLoading(true);
     try {
       const res = await getAllLogsheets();
-      setLogsheets(
-        res.data.filter((l) => l.verificationStatus === "Verified")
-      ); // Only verified logs can be approved
+      setLogsheets(res.data.filter((l) => l.verificationStatus === "Verified")); 
     } catch (err) {
       toast.error("Error fetching logsheets");
     } finally {
@@ -28,12 +28,25 @@ function ApproveLogsheet() {
   const handleApprove = async (logsheet, action) => {
     try {
       const request = {
-        approverId: 1, // replace with logged-in user id
-        approvalStatus: action, // "Approved" or "Rejected"
+        approverId: user.id, 
+        approvalStatus: action, 
       };
       await approveLogsheet(logsheet.id, request);
+
+      setLogsheets((prev) =>
+        prev.map((l) =>
+          l.id === logsheet.id
+            ? {
+                ...l,
+                approvalStatus: action,
+                approvedById: user.id,
+                approvedAt: new Date().toISOString(),
+              }
+            : l
+        )
+      );
+
       toast.success(`Logsheet ${action} successfully`);
-      fetchLogsheets();
     } catch (err) {
       toast.error("Error updating logsheet");
     }
@@ -53,7 +66,6 @@ function ApproveLogsheet() {
               <th>ID</th>
               <th>Date</th>
               <th>Entry Type</th>
-              <th>Staff</th>
               <th>Description</th>
               <th>Approved By</th>
               <th>Approved At</th>
@@ -67,7 +79,6 @@ function ApproveLogsheet() {
                 <td>{ls.id}</td>
                 <td>{ls.logDate?.split("T")[0]}</td>
                 <td>{ls.entryType}</td>
-                <td>{ls.staffId}</td>
                 <td>{ls.description}</td>
                 <td>{ls.approvedById || "-"}</td>
                 <td>{ls.approvedAt?.split("T")[0] || "-"}</td>

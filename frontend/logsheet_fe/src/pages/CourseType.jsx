@@ -18,6 +18,8 @@ function CourseType() {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ title: "", description: "" });
+  
+  
 
   
   const fetchCourseTypes = async () => {

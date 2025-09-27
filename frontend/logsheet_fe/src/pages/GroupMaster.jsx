@@ -153,7 +153,7 @@ function GroupMaster() {
           <tbody>
             {groups.map((g, index) => {
               const course = courses.find((c) => c.id == g.courseId);
-                console.log(course);
+                //console.log(course);
               return (
                 <tr key={g.id}>
                   <td>{index + 1}</td>

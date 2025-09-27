@@ -6,10 +6,21 @@ import { toast } from "react-toastify";
 export default function BatchCycleList() {
   const [batchCycles, setBatchCycles] = useState([]);
 
-  // Fetch all batch cycles
+  
+
+    const getAuthHeader = () => {
+      const user = JSON.parse(sessionStorage.getItem("user")); 
+      if (user && user.token) {
+        return {
+          Authorization: `Bearer ${user.token}`,
+        };
+      }
+      return {};
+    };
+
   const fetchBatchCycles = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/batch-cycles");
+      const res = await axios.get("http://localhost:8080/api/batch-cycles",{ headers: getAuthHeader() });
       setBatchCycles(res.data);
     } catch (err) {
       toast.error("Failed to fetch batch cycles");
@@ -23,7 +34,7 @@ export default function BatchCycleList() {
   // Delete handler
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:8080/api/batch-cycles/${id}`);
+      const res = await axios.delete(`http://localhost:8080/api/batch-cycles/${id}`,{ headers: getAuthHeader() });
       toast.success(res.data.message);
       fetchBatchCycles(); // refresh list
     } catch (err) {

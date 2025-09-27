@@ -14,6 +14,8 @@ export default function TopicForm({ initialData, sections, onSubmit }) {
     }
   }, [initialData]);
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ name, sectionId: parseInt(sectionId) }); // ✅ send sectionId to backend
