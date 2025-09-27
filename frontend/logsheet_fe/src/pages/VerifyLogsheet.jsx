@@ -1,22 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { getAllLogsheets, verifyLogsheet } from "../services/logsheetService";
+import { getAllLogsheets, verifyLogsheet, getAllModules } from "../services/logsheetService";
 import { toast } from "react-toastify";
 import { Button, Table } from "react-bootstrap";
 
 function VerifyLogsheet() {
   const [logsheets, setLogsheets] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [modules, setModules] = useState([]);
+
+  const user = JSON.parse(sessionStorage.getItem("user")); 
 
   const fetchLogsheets = async () => {
     setLoading(true);
     try {
-      const res = await getAllLogsheets();
+      const [logsheetsRes, moduleRes] = await Promise.all([
+        getAllLogsheets(),
+        getAllModules(),
+      ]);
+
+      const allLogsheets = logsheetsRes.data;
+      const allModules = moduleRes.data;
+
+      setModules(allModules);
+
+      let filteredLogs = allLogsheets;
+
+      if (user.role !== "Admin") {
+        const userModules = allModules.filter(
+          (m) => Number(m.moduleRouterId) === Number(user.id)
+        );
+        const userModuleIds = userModules.map((m) => m.id);
+
+        filteredLogs = filteredLogs.filter((l) =>
+          userModuleIds.includes(Number(l.moduleId))
+        );
+      }
+
       setLogsheets(
-        res.data.filter(
-          (l) => l.verificationStatus === "Pending" || l.verificationStatus
+        filteredLogs.filter(
+          (l) =>
+            l.verificationStatus === "Pending" ||
+            l.verificationStatus === "Verified"
         )
       );
     } catch (err) {
+      console.error("Error fetching logsheets:", err);
       toast.error("Error fetching logsheets");
     } finally {
       setLoading(false);
@@ -29,14 +57,28 @@ function VerifyLogsheet() {
 
   const handleVerify = async (logsheet, action) => {
     try {
-      const request = {
-        verifierId: 1, // replace with logged-in user id
-        verificationStatus: action, // "Verified" or "Rejected"
+      const payload = {
+        verifierId: user.id,
+        verificationStatus: action,
       };
-      await verifyLogsheet(logsheet.id, request);
+      await verifyLogsheet(logsheet.id, payload);
+
+      setLogsheets((prev) =>
+        prev.map((l) =>
+          l.id === logsheet.id
+            ? {
+                ...l,
+                verificationStatus: action,
+                verifiedById: user.id,
+                verifiedAt: new Date().toISOString(),
+              }
+            : l
+        )
+      );
+
       toast.success(`Logsheet ${action} successfully`);
-      fetchLogsheets();
     } catch (err) {
+      console.error("Error verifying logsheet:", err);
       toast.error("Error updating logsheet");
     }
   };
@@ -55,7 +97,6 @@ function VerifyLogsheet() {
               <th>ID</th>
               <th>Date</th>
               <th>Entry Type</th>
-              <th>Staff</th>
               <th>Description</th>
               <th>Verified By</th>
               <th>Verified At</th>
@@ -69,7 +110,6 @@ function VerifyLogsheet() {
                 <td>{ls.id}</td>
                 <td>{ls.logDate?.split("T")[0]}</td>
                 <td>{ls.entryType}</td>
-                <td>{ls.staffId}</td>
                 <td>{ls.description}</td>
                 <td>{ls.verifiedById || "-"}</td>
                 <td>{ls.verifiedAt?.split("T")[0] || "-"}</td>

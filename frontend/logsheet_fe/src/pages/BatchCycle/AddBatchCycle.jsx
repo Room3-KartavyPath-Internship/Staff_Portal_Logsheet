@@ -13,6 +13,16 @@ export default function AddBatchCycle() {
 
   const navigate = useNavigate();
 
+  const getAuthHeader = () => {
+      const user = JSON.parse(sessionStorage.getItem("user")); 
+      if (user && user.token) {
+        return {
+          Authorization: `Bearer ${user.token}`,
+        };
+      }
+      return {};
+    };
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -20,7 +30,7 @@ export default function AddBatchCycle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8080/api/batch-cycles", form);
+      const res = await axios.post("http://localhost:8080/api/batch-cycles", form,{ headers: getAuthHeader() });
       toast.success(res.data.message);
       navigate("/batch-cycles");
     } catch (err) {

@@ -3,26 +3,25 @@ import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 const PrivateRoute = ({ requiredPath }) => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    
+    return <div>Loading...</div>;
+  }
 
   if (!user) {
-    // Not logged in
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 
   if (user.role === "Admin") {
-    // Admin has access to all pages
     return <Outlet />;
   }
 
-  // Check if user has permission for the required path
-  const hasAccess = user.menus?.some((menu) => menu.path === requiredPath);
-
-  if (hasAccess) {
-    return <Outlet />;
-  } else {
-    return <Navigate to="/unauthorized" />;
-  }
+    const hasAccess = user.menus?.some((menu) =>
+    location.pathname === menu.path || location.pathname.startsWith(menu.path)
+  );
+  return hasAccess ? <Outlet /> : <Navigate to="/unauthorized" replace />;
 };
 
 export default PrivateRoute;

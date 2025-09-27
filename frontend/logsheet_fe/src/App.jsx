@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"; // no BrowserRouter here
+import { Routes, Route } from "react-router-dom"; 
 import { SubjectsProvider } from "./contexts/SubjectsContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
@@ -15,6 +15,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./routes/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 
 
 import BatchCycleList from "./pages/BatchCycle/BatchCycleList";
@@ -47,6 +48,8 @@ function App() {
         <div className="container">
           <Routes>
             {/* Public routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -54,6 +57,7 @@ function App() {
             <Route path="/unauthorized" element={<Unauthorized />} />
 
             {/* Protected routes */}
+
             <Route element={<PrivateRoute requiredPath="/dashboard" />}>
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
@@ -103,10 +107,6 @@ function App() {
              </Route>
 
 
-{/*              
-              <Route element={<PrivateRoute requiredPath="/logsheets" />}>
-              <Route path="/logsheets" element={<Logsheet />} />
-             </Route> */}
 
              <Route element={<PrivateRoute requiredPath="/logsheets" />}>
               <Route path="/logsheets" element={<Logsheet />} />
@@ -115,12 +115,7 @@ function App() {
              </Route>
 
 
-
-            
-           
-
-
-            <Route element={<PrivateRoute requiredPath="/" />}>
+            <Route element={<PrivateRoute requiredPath="/subjects" />}>
               <Route path="/subjects" element={<SubjectPage />} />
             </Route>
 
@@ -155,14 +150,7 @@ function App() {
           </Routes>
         </div>
 
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          pauseOnHover
-        />
+        <ToastContainer position="top-right" autoClose={2000}/>
       </SubjectsProvider>
     </AuthProvider>
   );

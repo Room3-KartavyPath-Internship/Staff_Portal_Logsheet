@@ -7,9 +7,19 @@ export default function TopicList() {
   const [topics, setTopics] = useState([]);
   const navigate = useNavigate();
 
+  const getAuthHeader = () => {
+      const user = JSON.parse(sessionStorage.getItem("user")); 
+      if (user && user.token) {
+        return {
+          Authorization: `Bearer ${user.token}`,
+        };
+      }
+      return {};
+    };
+
   const fetchTopics = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/modules/topics");
+      const res = await axios.get("http://localhost:8080/api/modules/topics",{ headers: getAuthHeader() });
       setTopics(res.data || []);
     } catch (err) {
       toast.error("Error fetching topics");
@@ -25,7 +35,7 @@ export default function TopicList() {
     if (!window.confirm("Are you sure you want to delete this topic?")) return;
 
     try {
-      const res = await axios.delete(`http://localhost:8080/api/modules/topic/${id}`);
+      const res = await axios.delete(`http://localhost:8080/api/modules/topic/${id}`,{ headers: getAuthHeader() });
       setTopics(topics.filter(t => t.id !== id));
       toast.success(res.data?.message || "Deleted successfully!");
     } catch (err) {
