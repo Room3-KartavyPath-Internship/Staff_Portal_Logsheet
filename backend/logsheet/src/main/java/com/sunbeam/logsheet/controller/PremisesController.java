@@ -56,8 +56,9 @@ public class PremisesController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<?>> deletePremises(@PathVariable Long id) {
-      
-            return ResponseEntity.status(404).body(service.deletePremises(id));
+        service.deletePremises(id);
+        return ResponseEntity.ok(new ApiResponse<>("Premises deleted successfully", true));
     }
+
 
 }
