@@ -1,5 +1,8 @@
 package com.sunbeam.logsheet.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,10 +27,12 @@ public class CourseCoordinator {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "course_id", nullable = true)
     private Course course;
 
     @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "staff_id", nullable = true)
     private Staff staff;
 }

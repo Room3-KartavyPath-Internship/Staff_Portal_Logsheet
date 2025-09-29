@@ -23,7 +23,7 @@ export const getAllModules = () => axios.get(`${API_URL}/module`, { headers: get
 export const addModule = (module) => axios.post(`${API_URL}/module`, module, { headers: getAuthHeader() });
 
 // Update module
-export const updateModule = (id, module) => axios.put(`${API_URL}/module/${id}`, modulev);
+export const updateModule = (id, module) => axios.put(`${API_URL}/module/${id}`, module, { headers: getAuthHeader() });
 
 // Delete module
 export const deleteModule = (id) => axios.delete(`${API_URL}/module/${id}`, { headers: getAuthHeader() });
