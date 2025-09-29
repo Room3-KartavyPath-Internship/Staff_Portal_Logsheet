@@ -54,8 +54,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
     	
     	
-//    	String email = req.getEmail();
-//      String password = req.getPassword();
+
     	
         Staff staff = staffRepository.findByEmail(req.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("Invalid credentials"));
@@ -65,11 +64,6 @@ public class AuthController {
         }
         
         
-//       // Optional: authenticate via AuthenticationManager (Spring Security)
-//        Authentication authentication = AuthenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken (email, password)
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
         String token = jwtUtil.generateToken(staff.getEmail());

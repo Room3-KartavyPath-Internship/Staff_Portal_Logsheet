@@ -1,4 +1,4 @@
-// src/components/Modules.jsx
+
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Table, Form } from "react-bootstrap";
 import {
@@ -29,7 +29,7 @@ const Modules = () => {
     subjectIds: [],
   });
 
-  // Fetch all data
+ 
   const fetchModules = async () => {
     try {
       const res = await getAllModules();
@@ -42,7 +42,7 @@ const Modules = () => {
   const fetchStaff = async () => {
     try {
       const res = await getAllStaff();
-     // console.log(res);
+     
       setStaff(res);
     } catch (err) {
       toast.error("Failed to fetch staff");
@@ -64,12 +64,12 @@ const Modules = () => {
     fetchSubjects();
   }, []);
 
-  // Handle form input changes
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit (Add / Update)
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -96,7 +96,7 @@ const Modules = () => {
     }
   };
 
-  // Edit button clicked
+
   const handleEdit = async (id) => {
     try {
       const res = await getModuleById(id);
@@ -108,7 +108,7 @@ const Modules = () => {
     }
   };
 
-  // Delete module
+  
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this module?")) {
       try {
@@ -189,7 +189,7 @@ const Modules = () => {
         </tbody>
       </Table>
 
-      {/* Add/Edit Modal */}
+      
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -239,7 +239,7 @@ const Modules = () => {
               />
             </Form.Group>
 
-            {/* Staff Dropdown */}
+            
             <Form.Group controlId="formStaff" className="mb-3">
               <Form.Label>Assign Staff (Router)</Form.Label>
               <Form.Select
@@ -256,7 +256,7 @@ const Modules = () => {
               </Form.Select>
             </Form.Group>
 
-            {/* Subjects Multi-select */}
+           
             <Form.Group controlId="formSubjects" className="mb-3">
               <Form.Label>Assign Subjects</Form.Label>
               <Form.Select

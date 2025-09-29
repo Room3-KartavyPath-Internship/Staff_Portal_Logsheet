@@ -1,4 +1,4 @@
-// src/services/apiClient.js
+
 import axios from "axios";
 import { config } from "../config";
 
@@ -9,7 +9,7 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add token from sessionStorage
+
 api.interceptors.request.use((config) => {
   const user = JSON.parse(sessionStorage.getItem("user")); 
   if (user && user.token) {

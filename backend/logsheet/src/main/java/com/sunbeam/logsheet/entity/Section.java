@@ -17,7 +17,7 @@ public class Section {
 
     private String name;
 
-    // Each section belongs to ONE subject
+    
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;

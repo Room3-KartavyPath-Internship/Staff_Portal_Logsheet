@@ -23,7 +23,7 @@ export default function SubjectPage() {
             }
 
             closeModal();
-            await fetchSubjects(); // Updates context → SectionPage dropdown updates automatically
+            await fetchSubjects(); 
         } catch (error) {
             console.error(error);
             toast.error("Operation failed");

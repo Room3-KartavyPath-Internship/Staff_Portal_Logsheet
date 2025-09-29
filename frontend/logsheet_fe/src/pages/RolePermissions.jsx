@@ -1,5 +1,5 @@
 
-// src/pages/RolePermissions.jsx
+
 import React, { useEffect, useState } from "react";
 import * as roleService from "../services/roleService";
 import * as menuService from "../services/MenuItemService";
@@ -94,7 +94,7 @@ export default function RolePermissions() {
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>
-      {/* LEFT PANEL: Roles */}
+      
       <div
         style={{
           width: "280px",
@@ -164,7 +164,7 @@ export default function RolePermissions() {
         </ul>
       </div>
 
-      {/* RIGHT PANEL: Permissions */}
+      
       <div style={{ flex: 1, padding: 20 }}>
         {selectedRole ? (
           <>
@@ -172,7 +172,7 @@ export default function RolePermissions() {
               Permissions — {selectedRole.title}
             </h2>
 
-            {/* Menu add form */}
+            
             <div style={{ marginBottom: 16 }}>
               <input
                 placeholder="Menu title"
@@ -204,7 +204,7 @@ export default function RolePermissions() {
               </button>
             </div>
 
-            {/* Permissions Table */}
+            
             <table
               style={{
                 width: "100%",

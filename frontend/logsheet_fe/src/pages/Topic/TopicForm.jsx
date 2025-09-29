@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from "react";
 
 export default function TopicForm({ initialData, sections, onSubmit }) {
@@ -18,7 +15,7 @@ export default function TopicForm({ initialData, sections, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ name, sectionId: parseInt(sectionId) }); // ✅ send sectionId to backend
+    onSubmit({ name, sectionId: parseInt(sectionId) }); 
   };
 
   return (
@@ -45,7 +42,7 @@ export default function TopicForm({ initialData, sections, onSubmit }) {
           <option value="">Select Section</option>
           {sections.map((sec) => (
             <option key={sec.id} value={sec.id}>
-              {sec.name} {/* ✅ show section name */}
+              {sec.name} 
             </option>
           ))}
         </select>

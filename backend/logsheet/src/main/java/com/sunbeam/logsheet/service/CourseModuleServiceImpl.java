@@ -222,11 +222,11 @@ public class CourseModuleServiceImpl implements CourseModuleService {
 	    Module module = moduleRepo.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Module not found"));
 
-	    // Clear subjects to remove join-table entries
+	    
 	    module.getSubjects().clear();
-	    moduleRepo.save(module); // Update module after clearing relations
+	    moduleRepo.save(module); 
 
-	    // Now delete safely
+	    
 	    moduleRepo.delete(module);
 
 	    return new ApiResponse<>("Module deleted successfully", true);

@@ -5,7 +5,7 @@ import {
   getBatchCycles,
   getPremises,
   getCourseTypes,
-} from "../services/CourseService"; // correct path
+} from "../services/CourseService"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -33,14 +33,14 @@ const CourseList = () => {
 
     getBatchCycles()
       .then((res) => {
-        //console.log("Batch Cycles:", res.data);
+        
         setBatchCycles(res.data);
       })
       .catch(() => toast.error("Failed to load batch cycles"));
 
     getPremises()
       .then((res) => {
-       // console.log("Premises:", res.data);
+      
         setPremises(res.data);
       })
       .catch(() => toast.error("Failed to load premises"));
@@ -48,13 +48,13 @@ const CourseList = () => {
     getCourseTypes()
       .then((res) => {
         const types = Array.isArray(res.data) ? res.data : res.data?.data || [];
-       // console.log("Course Types:", types);
+       
         setCourseTypes(types);
       })
       .catch(() => toast.error("Failed to load course types"));
   }, []);
 
-  // Handle course deletion
+  
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this course?")) {
       try {

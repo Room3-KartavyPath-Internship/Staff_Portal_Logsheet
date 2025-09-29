@@ -27,7 +27,7 @@ public class RoleMenuPermission {
     @JoinColumn(name = "menu_item_id")
     private MenuItem menuItem;
 
-    // map to DB column is_allowed
+    
     @Column(name = "is_allowed", nullable = false)
     private boolean allowed;
 }

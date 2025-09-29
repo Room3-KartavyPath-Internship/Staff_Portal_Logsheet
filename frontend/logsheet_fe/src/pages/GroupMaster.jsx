@@ -34,7 +34,7 @@ function GroupMaster() {
     setLoading(true);
     try {
       const res = await getAllGroups();
-      //console.log(res);
+      
       if (res.success) {
         setGroups(res.data); 
       } else {
@@ -51,7 +51,7 @@ function GroupMaster() {
   const fetchCourses = async () => {
     try {
       const res = await getAllCourses();
-      //console.log(res);
+      
       
       if (res.success) {
         setCourses(res.data); 
@@ -153,7 +153,7 @@ function GroupMaster() {
           <tbody>
             {groups.map((g, index) => {
               const course = courses.find((c) => c.id == g.courseId);
-                //console.log(course);
+                
               return (
                 <tr key={g.id}>
                   <td>{index + 1}</td>

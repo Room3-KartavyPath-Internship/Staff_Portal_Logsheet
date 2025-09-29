@@ -15,5 +15,5 @@ public class ModuleDto {
     private int theoryHours;
     private int practicalHours;
     private Long moduleRouterId;
-    private Set<Long> subjectIds; // store Subject IDs
+    private Set<Long> subjectIds; 
 }

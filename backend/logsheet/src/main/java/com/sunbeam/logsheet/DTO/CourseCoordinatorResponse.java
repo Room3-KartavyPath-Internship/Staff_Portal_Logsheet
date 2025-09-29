@@ -12,7 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CourseCoordinatorResponse {
-	 private Long id;           // Coordinator ID
-	    private String courseName; // Name of the course
-	    private String staffName;  // Full name of the staff
+	 private Long id;           
+	    private String courseName; 
+	    private String staffName;  
 }

@@ -1,7 +1,7 @@
-// src/services/api.js
+
 import axios from "axios";
 
-const API_BASE = "http://localhost:8080/api/modules"; // backend path
+const API_BASE = "http://localhost:8080/api/modules"; 
 
 const getAuthHeader = () => {
   const user = JSON.parse(sessionStorage.getItem("user")); 
@@ -13,7 +13,7 @@ const getAuthHeader = () => {
   return {};
 };
 
-// --- Topic APIs ---
+
 export const fetchTopics = async () => {
   const res = await axios.get(`${API_BASE}/topics`,{ headers: getAuthHeader() });
   return res.data;
