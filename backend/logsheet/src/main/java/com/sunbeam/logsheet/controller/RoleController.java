@@ -43,10 +43,10 @@ public class RoleController {
         return ResponseEntity.ok(new ApiResponse<>("All roles", true, roles));
     }
 
-    // ✅ Get roles for the logged-in user (Admin sees all, Staff/CoCo sees only their role)
+
     @GetMapping("/for-user")
     public ResponseEntity<ApiResponse<List<RoleResponseDTO>>> getRolesForUser(
-            @RequestAttribute("user") User user // replace with @AuthenticationPrincipal if using Spring Security
+            @RequestAttribute("user") User user 
     ) {
         List<RoleResponseDTO> roles;
 

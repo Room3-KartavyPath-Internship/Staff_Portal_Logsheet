@@ -1,4 +1,4 @@
-// src/components/CourseCoordinator.jsx
+
 import React, { useEffect, useState } from "react";
 import {
   getAllCoordinators,
@@ -25,7 +25,7 @@ const CourseCoordinator = () => {
     staffId: "",
   });
 
-  // Fetch coordinators, courses, staff
+  
   const fetchCoordinators = async () => {
     try {
       const res = await getAllCoordinators();
@@ -59,12 +59,12 @@ const CourseCoordinator = () => {
     fetchStaff();
   }, []);
 
-  // Handle input changes
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle add / update submit
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -84,7 +84,7 @@ const CourseCoordinator = () => {
     }
   };
 
-  // Edit
+  
   const handleEdit = async (id) => {
     try {
       const res = await getCoordinatorById(id);
@@ -99,7 +99,7 @@ const CourseCoordinator = () => {
     }
   };
 
-  // Delete
+ 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this coordinator?")) {
       try {
@@ -162,7 +162,7 @@ const CourseCoordinator = () => {
         </tbody>
       </Table>
 
-      {/* Modal for Add/Edit */}
+      
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -171,7 +171,7 @@ const CourseCoordinator = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            {/* Course Dropdown */}
+            
             <Form.Group className="mb-3">
               <Form.Label>Course</Form.Label>
               <Form.Select
@@ -189,7 +189,7 @@ const CourseCoordinator = () => {
               </Form.Select>
             </Form.Group>
 
-            {/* Staff Dropdown */}
+            
             <Form.Group className="mb-3">
               <Form.Label>Staff</Form.Label>
               <Form.Select

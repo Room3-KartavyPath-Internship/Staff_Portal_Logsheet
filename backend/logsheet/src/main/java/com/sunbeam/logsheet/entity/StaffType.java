@@ -2,16 +2,7 @@ package com.sunbeam.logsheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-//public enum StaffType {
-//    InHouse,
-//   Visiting;
-//
-//
-//
-//
-//
-//	
-//}
+
 
 
 public enum StaffType {

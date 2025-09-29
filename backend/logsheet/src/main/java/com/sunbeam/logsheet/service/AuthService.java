@@ -10,6 +10,6 @@ public interface AuthService {
 	LoginResponse login(LoginRequest loginRequest);
 	RegisterResponse register(RegisterRequest registerRequest);
    
-    String sendResetLink(String email); // sends link to email
-    String resetPassword(String token, String newPassword); // reset using token
+    String sendResetLink(String email); 
+    String resetPassword(String token, String newPassword); 
 }

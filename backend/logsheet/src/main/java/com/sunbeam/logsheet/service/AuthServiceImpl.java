@@ -125,7 +125,7 @@ public class AuthServiceImpl implements AuthService {
         return "Password reset link sent! Check console for link.";
     }
 
-    // ✅ RESET PASSWORD
+   
     @Override
     @Transactional
     public String resetPassword(String token, String newPassword) {
@@ -136,7 +136,7 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Token has expired");
         }
 
-        staff.setPassword(newPassword); // TODO: hash password
+        staff.setPassword(newPassword); 
         staff.setResetToken(null);
         staff.setResetTokenExpiry(null);
         staffRepository.save(staff);

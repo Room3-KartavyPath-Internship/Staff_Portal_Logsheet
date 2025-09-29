@@ -19,7 +19,7 @@ public class Subject {
 
     private String title;
 
-    // One Subject -> Many Sections
+    
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Section> sections;
 }

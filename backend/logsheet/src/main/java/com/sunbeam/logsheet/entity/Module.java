@@ -24,7 +24,7 @@ public class Module {
     private int theoryHours;
     private int practicalHours;
 
-    private Long moduleRouterId; // staff id reference
+    private Long moduleRouterId; 
 
     
     @ManyToMany

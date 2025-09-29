@@ -19,6 +19,6 @@ public class RegisterResponse {
 	    private String message;
 	    
 	    public RegisterResponse(Long id2, String string, String email2, String title, String string2, String string3) {
-			// TODO Auto-generated constructor stub
+			
 		}
 }

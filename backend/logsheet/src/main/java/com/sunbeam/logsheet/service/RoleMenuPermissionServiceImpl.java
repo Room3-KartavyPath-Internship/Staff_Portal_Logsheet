@@ -33,37 +33,16 @@ public class RoleMenuPermissionServiceImpl implements RoleMenuPermissionService 
 
     @Autowired
     private ModelMapper modelMapper;
-//
-//    @Override
-//    public ApiResponse<?> createPermission(RoleMenuPermissionDTO dto) {
-//        // Validate Role
-//        roleRepo.findById(dto.getRoleId())
-//                .orElseThrow(() -> new EntityNotFoundException("Role not found"));
-//
-//        // Validate MenuItem
-//        menuRepo.findById(dto.getMenuItemId())
-//                .orElseThrow(() -> new EntityNotFoundException("Menu item not found"));
-//
-//        RoleMenuPermission permission = new RoleMenuPermission();
-//        RoleMenuId id = new RoleMenuId(dto.getRoleId(), dto.getMenuItemId());
-//        permission.setId(id);
-//        permission.setAllowed(dto.isAllowed());
-//        permission.setRole(roleRepo.getReferenceById(dto.getRoleId()));
-//        permission.setMenuItem(menuRepo.getReferenceById(dto.getMenuItemId()));
-//
-//        permissionRepo.save(permission);
-//        return new ApiResponse<>("Role menu permission created successfully", true,
-//                modelMapper.map(permission, RoleMenuPermissionDTO.class));
-//    }
+
 
     
     @Override
     public ApiResponse<?> createPermission(RoleMenuPermissionDTO dto) {
-        // Validate Role
+        
         roleRepo.findById(dto.getRoleId())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
 
-        // Validate MenuItem
+        
         menuRepo.findById(dto.getMenuItemId())
                 .orElseThrow(() -> new EntityNotFoundException("Menu item not found"));
 
@@ -76,7 +55,6 @@ public class RoleMenuPermissionServiceImpl implements RoleMenuPermissionService 
 
         permissionRepo.save(permission);
 
-        // ✅ Manual mapping to include roleId & menuItemId
         RoleMenuPermissionDTO responseDTO = new RoleMenuPermissionDTO();
         responseDTO.setRoleId(permission.getRole().getId());
         responseDTO.setMenuItemId(permission.getMenuItem().getId());

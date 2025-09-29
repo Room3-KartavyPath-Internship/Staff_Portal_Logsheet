@@ -17,7 +17,7 @@ const getAuthHeader = () => {
 
 export const getAllLogsheets = async () => {
   const res = await axios.get(LOGSHEET_API,{ headers: getAuthHeader() });
- // console.log(res.data)
+ 
   return res.data;
 };
 
@@ -63,7 +63,7 @@ const TOPIC_API = `${BASE_URL}/api/modules/topics`;
 
 export const getAllTopics = async () => {
   const res = await axios.get(TOPIC_API,{ headers: getAuthHeader() });
- // console.log(res.data)
+ 
   return res.data;
 };
 
@@ -72,7 +72,7 @@ const STAFF_API = `${BASE_URL}/api/staff/all`;
 
 export const getAllStaffs = async () => {
   const res = await axios.get(STAFF_API,{ headers: getAuthHeader() });
-  //console.log(res.data)
+  
   return res.data;
 };
 

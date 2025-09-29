@@ -47,7 +47,7 @@ function App() {
         <Navbar />
         <div className="container">
           <Routes>
-            {/* Public routes */}
+           
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -56,7 +56,7 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
 
-            {/* Protected routes */}
+            
 
             <Route element={<PrivateRoute requiredPath="/dashboard" />}>
               <Route path="/dashboard" element={<Dashboard />} />

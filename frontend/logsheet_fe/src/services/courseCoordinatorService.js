@@ -14,21 +14,21 @@ const getAuthHeader = () => {
   return {};
 };
 
-// Get all coordinators
+
 export const getAllCoordinators = () => axios.get(`${API_URL}/all`,{ headers: getAuthHeader() });
 
-// Get coordinator by id
+
 export const getCoordinatorById = (id) => axios.get(`${API_URL}/${id}`,{ headers: getAuthHeader() });
 
-// Add new coordinator
+
 export const addCoordinator = (coordinator) =>
   axios.post(`${API_URL}/add`, coordinator,{ headers: getAuthHeader() });
 
-// Update coordinator
+
 export const updateCoordinator = (id, coordinator) =>
   axios.put(`${API_URL}/update/${id}`, coordinator,{ headers: getAuthHeader() });
 
-// Delete coordinator
+
 export const deleteCoordinator = (id) =>
   axios.delete(`${API_URL}/delete/${id}`,{ headers: getAuthHeader() });
 

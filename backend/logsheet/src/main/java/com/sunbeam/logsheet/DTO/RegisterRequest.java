@@ -14,6 +14,6 @@ public class RegisterRequest {
     private String email;
     private String password;
     private String mobile;
-    private String role; //  "coco", "faculty"
-    private StaffType staff_type; // Optional: "IN_HOUSE", "VISITING"
+    private String role; 
+    private StaffType staff_type; 
 }

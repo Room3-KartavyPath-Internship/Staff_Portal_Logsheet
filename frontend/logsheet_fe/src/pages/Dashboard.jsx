@@ -8,9 +8,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login"); // if not logged in, go to login
+      navigate("/login"); 
     } else if (user.menus && user.menus.length > 0) {
-      // redirect to first allowed menu
+     
       navigate(user.menus[0].path || "/unauthorized");
     }
   }, [user, navigate]);

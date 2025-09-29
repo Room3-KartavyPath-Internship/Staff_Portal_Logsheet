@@ -13,26 +13,26 @@ const getAuthHeader = () => {
   return {};
 };
 
-// Get all modules
+
 export const getAllModules = () => axios.get(`${API_URL}/module`, { headers: getAuthHeader() });
 
-// Get module by ID
+
  export const getModuleById = (id) => axios.get(`${API_URL}/module/${id}`, { headers: getAuthHeader() });
 
-// Add new module
+
 export const addModule = (module) => axios.post(`${API_URL}/module`, module, { headers: getAuthHeader() });
 
-// Update module
+
 export const updateModule = (id, module) => axios.put(`${API_URL}/module/${id}`, module, { headers: getAuthHeader() });
 
-// Delete module
+
 export const deleteModule = (id) => axios.delete(`${API_URL}/module/${id}`, { headers: getAuthHeader() });
 
 const SUBJECT_API = `${config.serverBaseUrl}/api/modules/subjects`;
 
 export const getAllSubjects = async () => {
   const res = await axios.get(SUBJECT_API, { headers: getAuthHeader() });
-  //console.log(res);
+  
   return res.data;
 }
 

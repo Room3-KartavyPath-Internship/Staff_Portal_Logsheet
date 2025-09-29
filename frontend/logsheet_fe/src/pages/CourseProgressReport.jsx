@@ -1,4 +1,4 @@
-// src/components/CourseProgressReport.jsx
+
 import React, { useState, useEffect } from "react";
 import { getCourseProgressReport, getAllCourses } from "../services/courseProgressReportService";
 import { Button, Table, Spinner } from "react-bootstrap";
@@ -8,19 +8,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const CourseProgressReport = () => {
-  const { courseName: paramCourseName } = useParams(); // from URL
-  const navigate = useNavigate(); // for programmatic navigation
+  const { courseName: paramCourseName } = useParams(); 
+  const navigate = useNavigate(); 
   const [courseName, setCourseName] = useState(paramCourseName || "");
   const [courses, setCourses] = useState([]);
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // fetch all courses for dropdown
+ 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const res = await getAllCourses();
-        setCourses(res.data || []); // service already returns res.data
+        setCourses(res.data || []); 
       } catch (err) {
         toast.error("Failed to load courses");
       }
@@ -28,7 +28,7 @@ const CourseProgressReport = () => {
     fetchCourses();
   }, []);
 
-  // auto-fetch if courseName present in URL
+  
   useEffect(() => {
     if (paramCourseName) {
       fetchReport(paramCourseName);
@@ -54,14 +54,14 @@ const CourseProgressReport = () => {
     }
   };
 
-  // handle form submission
+ 
   const handleFetchReport = (e) => {
     e.preventDefault();
     if (!courseName.trim()) {
       toast.warning("Please select a course");
       return;
     }
-    // navigate to URL with selected courseName
+    
     navigate(`/reports/course-progress/${courseName}`);
   };
 
@@ -69,7 +69,7 @@ const CourseProgressReport = () => {
     <div className="container mt-4">
       <h2 className="mb-3 text-center">📊 Course Progress Report</h2>
 
-      {/* Dropdown Search Form */}
+      
       <form
         className="d-flex justify-content-center mb-4"
         onSubmit={handleFetchReport}
@@ -93,7 +93,7 @@ const CourseProgressReport = () => {
         </Button>
       </form>
 
-      {/* Report Table */}
+      
       {reports.length > 0 ? (
         <Table striped bordered hover responsive className="shadow-sm">
           <thead className="table-dark">

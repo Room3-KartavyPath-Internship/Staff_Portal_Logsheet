@@ -31,12 +31,12 @@ export default function BatchCycleList() {
     fetchBatchCycles();
   }, []);
 
-  // Delete handler
+  
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(`http://localhost:8080/api/batch-cycles/${id}`,{ headers: getAuthHeader() });
       toast.success(res.data.message);
-      fetchBatchCycles(); // refresh list
+      fetchBatchCycles(); 
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to delete batch cycle");
     }

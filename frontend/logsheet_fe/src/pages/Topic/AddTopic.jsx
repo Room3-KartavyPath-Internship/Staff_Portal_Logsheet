@@ -1,6 +1,3 @@
-
-
-
 import React, { useEffect, useState } from "react";
 import TopicForm from "./TopicForm";
 import axios from "axios";
@@ -10,7 +7,7 @@ import { getSections } from "../../services/sectionApi";
 
 
 export default function AddTopic() {
-  const { id } = useParams(); // id for edit mode
+  const { id } = useParams(); 
   const [topicData, setTopicData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sections, setSections] = useState([]);

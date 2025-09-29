@@ -25,12 +25,12 @@ const StaffForm = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    // ✅ Load roles
+   
     getAllRoles()
       .then((res) => setRoles(res.data.data))
       .catch((err) => console.error("Error loading roles:", err));
 
-    // ✅ If editing, load staff
+    
     if (id) {
       getStaffById(id)
         .then((res) => {
@@ -57,7 +57,7 @@ const StaffForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {
-      // ✅ Update staff
+      
       const updatePayload = {
         firstName: staff.firstName,
         lastName: staff.lastName,
@@ -68,7 +68,7 @@ const StaffForm = () => {
       };
       updateStaff(id, updatePayload).then(() => navigate("/staffs"));
     } else {
-      // ✅ Create staff
+      
       const createPayload = { ...staff };
       createStaff(createPayload).then(() => navigate("/staffs"));
     }
@@ -140,7 +140,7 @@ const StaffForm = () => {
           />
         </div>
 
-        {/* ✅ Role dropdown */}
+      
         <div className="mb-3">
           <label className="form-label">Role</label>
           <select

@@ -14,6 +14,5 @@ public class RoleMenuId implements Serializable {
     private Long roleId;
     private Long menuItemId;
 
-    // Lombok @Data supplies equals/hashCode, but keep this if you prefer explicit:
-    // @Override public boolean equals(Object o) { ... } etc.
+   
 }

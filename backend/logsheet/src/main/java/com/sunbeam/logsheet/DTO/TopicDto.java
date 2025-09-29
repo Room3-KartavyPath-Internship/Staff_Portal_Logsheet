@@ -9,5 +9,5 @@ import lombok.*;
 public class TopicDto {
     private Long id;
     private String name;
-    private Long sectionId; // reference to section
+    private Long sectionId; 
 }

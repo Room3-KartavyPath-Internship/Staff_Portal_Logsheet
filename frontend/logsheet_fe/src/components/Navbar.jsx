@@ -1,15 +1,14 @@
+
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
-
 export default function Navbar() {
-  const { user, setUser } = useContext(AuthContext); 
+  const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   if (!user) return null;
 
- 
   const handleLogout = () => {
     sessionStorage.removeItem("user");
     setUser(null);
@@ -19,6 +18,7 @@ export default function Navbar() {
   const fullMenu = [
     {
       title: "Course Management",
+      icon: "bi-journal-bookmark",
       subMenu: [
         { title: "Batch Cycle", path: "/batch-cycles" },
         { title: "Premises", path: "api/premises" },
@@ -28,6 +28,7 @@ export default function Navbar() {
     },
     {
       title: "Course Module Management",
+      icon: "bi-diagram-3",
       subMenu: [
         { title: "Subject", path: "/subjects" },
         { title: "Section", path: "/sections" },
@@ -37,16 +38,19 @@ export default function Navbar() {
     },
     {
       title: "Course Group Management",
+      icon: "bi-people",
       subMenu: [{ title: "Group", path: "/groups" }],
     },
     {
       title: "Report Management",
+      icon: "bi-bar-chart-line",
       subMenu: [
         { title: "Course Progress Report", path: "/reports/course-progress/:courseName" },
       ],
     },
     {
       title: "User Management",
+      icon: "bi-person-badge",
       subMenu: [
         { title: "Role", path: "/roles" },
         { title: "Staff", path: "/staffs" },
@@ -54,10 +58,12 @@ export default function Navbar() {
     },
     {
       title: "Course Administration",
+      icon: "bi-gear",
       subMenu: [{ title: "Assign Course-Coordinator", path: "/course-coordinator" }],
     },
     {
       title: "LogSheet Management",
+      icon: "bi-clipboard-check",
       subMenu: [
         { title: "Log Sheet Types", path: "/logsheet-types" },
         { title: "Log", path: "/logsheets" },
@@ -84,7 +90,7 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container-fluid">
         <Link className="navbar-brand fw-bold" to="/dashboard">
-          Logsheet
+          <i className="bi bi-journal-text me-2"></i> Logsheet
         </Link>
 
         <button
@@ -101,17 +107,17 @@ export default function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 flex-wrap">
             {menuToRender.map((menu) => (
               <li className="nav-item dropdown" key={menu.title}>
                 <a
-                  className="nav-link dropdown-toggle"
+                  className="nav-link dropdown-toggle d-flex align-items-center"
                   href="#"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  {menu.title}
+                  <i className={`bi ${menu.icon} me-1`}></i> {menu.title}
                 </a>
                 <ul className="dropdown-menu shadow-sm">
                   {menu.subMenu.map((sub) => (
@@ -140,7 +146,7 @@ export default function Navbar() {
                 <i className="bi bi-person-circle me-1"></i>
                 {user.name}
               </a>
-              <ul className="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdown">
+              <ul className="dropdown-menu dropdown-menu-end shadow-sm">
                 <li>
                   <span className="dropdown-item-text">
                     <strong>Role:</strong> {user.role}

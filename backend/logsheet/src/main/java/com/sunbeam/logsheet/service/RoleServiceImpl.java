@@ -31,16 +31,16 @@ public class RoleServiceImpl implements RoleService {
             return new ApiResponse<>("Role title cannot be empty", false, null);
         }
 
-        // 1️⃣ Create Role and save to generate ID
+        
         Role role = new Role();
         role.setTitle(dto.getTitle());
         role.setDescription(dto.getDescription());
-        Role savedRole = roleRepository.save(role); // ID is generated here
+        Role savedRole = roleRepository.save(role); 
 
-        // 2️⃣ Add menu permissions if provided
+        
         if (dto.getMenuPermissions() != null) {
             for (RoleMenuPermissionDTO mpDto : dto.getMenuPermissions()) {
-                if (mpDto.getMenuItemId() == null) continue; // skip null menuItemId
+                if (mpDto.getMenuItemId() == null) continue; 
 
                 MenuItem menuItem = menuItemRepository.findById(mpDto.getMenuItemId())
                         .orElseThrow(() -> new EntityNotFoundException("Menu item not found: " + mpDto.getMenuItemId()));

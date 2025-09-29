@@ -9,7 +9,7 @@ import {
   getPremises,
   getCourseTypes,
   getCourseById,
-} from "../services/CourseService";   // correct path
+} from "../services/CourseService";   
 
 const CourseForm = () => {
   const [course, setCourse] = useState({
