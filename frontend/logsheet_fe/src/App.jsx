@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom"; 
+import "./App.css";
+
 import { SubjectsProvider } from "./contexts/SubjectsContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
