@@ -1,3 +1,3 @@
 export const config = {
-  serverBaseUrl: 'http://localhost:8080',
+  serverBaseUrl: 'https://staffportallogsheet-production.up.railway.app',
 }

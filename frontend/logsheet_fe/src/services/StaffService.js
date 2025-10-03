@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api/staff",
+  baseURL: "https://staffportallogsheet-production.up.railway.app/api/staff",
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,7 +10,7 @@ const api = axios.create({
 
 
 const roleApi = axios.create({
-  baseURL: "http://localhost:8080/api/roles",
+  baseURL: "https://staffportallogsheet-production.up.railway.app/api/roles",
   headers: {
     "Content-Type": "application/json",
   },

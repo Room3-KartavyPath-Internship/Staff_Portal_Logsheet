@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API_BASE = "http://localhost:8080/api/modules"; 
+const API_BASE = "https://staffportallogsheet-production.up.railway.app/api/modules"; 
 
 const getAuthHeader = () => {
   const user = JSON.parse(sessionStorage.getItem("user")); 

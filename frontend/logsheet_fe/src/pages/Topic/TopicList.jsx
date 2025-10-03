@@ -19,7 +19,7 @@ export default function TopicList() {
 
   const fetchTopics = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/modules/topics",{ headers: getAuthHeader() });
+      const res = await axios.get("https://staffportallogsheet-production.up.railway.app/api/modules/topics",{ headers: getAuthHeader() });
       setTopics(res.data || []);
     } catch (err) {
       toast.error("Error fetching topics");
@@ -35,7 +35,7 @@ export default function TopicList() {
     if (!window.confirm("Are you sure you want to delete this topic?")) return;
 
     try {
-      const res = await axios.delete(`http://localhost:8080/api/modules/topic/${id}`,{ headers: getAuthHeader() });
+      const res = await axios.delete(`https://staffportallogsheet-production.up.railway.app/api/modules/topic/${id}`,{ headers: getAuthHeader() });
       setTopics(topics.filter(t => t.id !== id));
       toast.success(res.data?.message || "Deleted successfully!");
     } catch (err) {

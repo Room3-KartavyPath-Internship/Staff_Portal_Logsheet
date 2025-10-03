@@ -30,7 +30,7 @@ export default function AddBatchCycle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8080/api/batch-cycles", form,{ headers: getAuthHeader() });
+      const res = await axios.post("https://staffportallogsheet-production.up.railway.app/api/batch-cycles", form,{ headers: getAuthHeader() });
       toast.success(res.data.message);
       navigate("/batch-cycles");
     } catch (err) {

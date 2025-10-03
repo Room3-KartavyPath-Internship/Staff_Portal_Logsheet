@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api/modules', 
+    baseURL: 'https://staffportallogsheet-production.up.railway.app/api/modules', 
     headers: {
         'Content-Type': 'application/json',
     },

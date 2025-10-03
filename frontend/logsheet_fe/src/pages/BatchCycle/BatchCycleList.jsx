@@ -20,7 +20,7 @@ export default function BatchCycleList() {
 
   const fetchBatchCycles = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/batch-cycles",{ headers: getAuthHeader() });
+      const res = await axios.get("https://staffportallogsheet-production.up.railway.app/api/batch-cycles",{ headers: getAuthHeader() });
       setBatchCycles(res.data);
     } catch (err) {
       toast.error("Failed to fetch batch cycles");
@@ -34,7 +34,7 @@ export default function BatchCycleList() {
   
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:8080/api/batch-cycles/${id}`,{ headers: getAuthHeader() });
+      const res = await axios.delete(`https://staffportallogsheet-production.up.railway.app/api/batch-cycles/${id}`,{ headers: getAuthHeader() });
       toast.success(res.data.message);
       fetchBatchCycles(); 
     } catch (err) {
