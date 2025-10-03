@@ -25,7 +25,7 @@ export default function EditBatchCycle() {
     };
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/batch-cycles/${id}`,{ headers: getAuthHeader() })
+    axios.get(`https://staffportallogsheet-production.up.railway.app/api/batch-cycles/${id}`,{ headers: getAuthHeader() })
       .then((res) => setForm(res.data))
       .catch(() => toast.error("Failed to load batch cycle"));
   }, [id]);
@@ -37,7 +37,7 @@ export default function EditBatchCycle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`http://localhost:8080/api/batch-cycles/${id}`, form,{ headers: getAuthHeader() });
+      const res = await axios.put(`https://staffportallogsheet-production.up.railway.app/api/batch-cycles/${id}`, form,{ headers: getAuthHeader() });
       toast.success(res.data.message);
       navigate("/batch-cycles");
     } catch (err) {

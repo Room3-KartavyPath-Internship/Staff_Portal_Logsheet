@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:8080/auth"; 
+const API = "https://staffportallogsheet-production.up.railway.app/auth"; 
 
 export const login = (data) => axios.post(`${API}/login`, data);
 export const adminLogin = (data) => axios.post(`${API}/admin/login`, data);
